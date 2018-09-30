@@ -16,6 +16,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-role-permission": [
+        "dist/ngx-role-permission"
+      ],
+      "ngx-role-permission/*": [
+        "dist/ngx-role-permission/*"
+      ]
+    }
   }
 }
