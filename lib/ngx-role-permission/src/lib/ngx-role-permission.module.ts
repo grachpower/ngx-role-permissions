@@ -1,10 +1,28 @@
-import { NgModule } from '@angular/core';
-import { NgxRolePermissionComponent } from './ngx-role-permission.component';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+
+import { CanPermitDirective } from './directives/can-permit.directive';
 
 @NgModule({
-  imports: [
+  imports: [],
+  declarations: [
+    CanPermitDirective,
   ],
-  declarations: [NgxRolePermissionComponent],
-  exports: [NgxRolePermissionComponent]
+  exports: [
+    CanPermitDirective,
+  ]
 })
-export class NgxRolePermissionModule { }
+export class NgxPermissionModule {
+  public forRoot(): ModuleWithProviders {
+    return {
+      ngModule: NgxPermissionModule,
+      providers: [],
+    };
+  }
+
+  public forChild(): ModuleWithProviders {
+    return {
+      ngModule: NgxPermissionModule,
+      providers: [],
+    };
+  }
+}
