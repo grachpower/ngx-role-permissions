@@ -10,6 +10,16 @@ export * from './lib/ngx-role-permission.module';
 export * from './lib/directives/can-permit.directive';
 
 /**
+ * Guards
+ */
+export * from './lib/guards/permission.guard';
+
+/**
+ * Services
+ */
+export * from './lib/services/permission.service';
+
+/**
  * Tokens
  */
 export * from './lib/tokens/permission-config.token';
