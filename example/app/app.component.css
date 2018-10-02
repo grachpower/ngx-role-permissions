@@ -1,0 +1,12 @@
+.navigation {
+  display: flex;
+}
+
+.link {
+  margin: 7px 10px;
+  text-decoration: none;
+}
+
+.link_active {
+  border-bottom: 1px solid #1321ff;
+}

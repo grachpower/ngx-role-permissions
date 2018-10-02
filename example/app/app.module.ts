@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     NgxPermissionModule.forRoot({
       child: ['admin', 'user'],
-      'child-two': ['user', 'admin'],
+      childTwo: ['user'],
     }),
   ],
   providers: [],
