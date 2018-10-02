@@ -7,7 +7,18 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './pages/child/child.module#ChildModule',
-    canLoad: [PermissionGuard.forPage('child')],
+    canLoad: [PermissionGuard],
+    data: {
+      permissionElement: 'child',
+    }
+  },
+  {
+    path: 'child',
+    loadChildren: './pages/child-two/child-two.module#ChildTwoModule',
+    canLoad: [PermissionGuard],
+    data: {
+      permissionElement: 'child-two',
+    }
   }
 ];
 

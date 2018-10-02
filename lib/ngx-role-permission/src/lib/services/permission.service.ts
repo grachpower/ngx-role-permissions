@@ -14,6 +14,10 @@ export class PermissionService {
     @Inject(PERMISSION_CONFIG_TOKEN) private permissionConfigs: PermissionConfigInterface[],
   ) { }
 
+  public clearRoles(): void {
+    this.roles$.next(null);
+  }
+
   public setRoles(roles: string[]): void {
     this.roles$.next(roles);
   }

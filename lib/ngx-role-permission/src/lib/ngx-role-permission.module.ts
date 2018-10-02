@@ -4,9 +4,8 @@ import { CanPermitDirective } from './directives/can-permit.directive';
 import { PERMISSION_CONFIG_TOKEN } from './tokens/permission-config.token';
 import { PermissionConfigInterface } from './interface/permissionConfig.interface';
 import { resolveFeatureConfig } from './helpers/resolve-feature-config';
-
-import { PermissionGuard } from './guards/permission.guard';
 import { PermissionService } from './services/permission.service';
+import { PermissionGuard } from './guards/permission.guard';
 
 @NgModule({
   imports: [],
@@ -15,7 +14,6 @@ import { PermissionService } from './services/permission.service';
   ],
   providers: [
     PermissionGuard,
-    PermissionService,
   ],
   exports: [
     CanPermitDirective,
@@ -26,6 +24,7 @@ export class NgxPermissionModule {
     return {
       ngModule: NgxPermissionModule,
       providers: [
+        PermissionService,
         {
           provide: PERMISSION_CONFIG_TOKEN,
           useValue: config,

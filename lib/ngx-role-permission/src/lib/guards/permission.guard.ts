@@ -1,38 +1,32 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { PermissionService } from '../services/permission.service';
 
-const nameProp = 'permissionElement';
-
 @Injectable()
 export class PermissionGuard implements CanActivate, CanLoad {
-  public static featureName = undefined;
-
-  public static forPage(pageName: string): typeof PermissionGuard {
-    PermissionGuard.featureName = pageName;
-
-    return this;
-  }
-
   constructor(
     private permissionService: PermissionService,
   ) {}
 
-  public canActivate(): Observable<boolean> {
-    this.permissionService.config$.subscribe((val) => console.log(val));
-
-    if (!(PermissionGuard.featureName)) {
-      console.error('No pageName defined for current guard');
+  public canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
+    if (!(next.data.permissionElement)) {
+      console.error('No permissionElement defined for current guard');
 
       return of(false);
     }
 
-    return this.permissionService.canAccess$(PermissionGuard.featureName);
+    return this.permissionService.canAccess$(next.data.permissionElement);
   }
 
-  public canLoad(): Observable<boolean> {
-    return this.canActivate();
+  public canLoad(route: Route): Observable<boolean> {
+    if (!(route.data.permissionElement)) {
+      console.error('No permissionElement defined for current guard');
+
+      return of(false);
+    }
+
+    return this.permissionService.canAccess$(route.data.permissionElement);
   }
 }

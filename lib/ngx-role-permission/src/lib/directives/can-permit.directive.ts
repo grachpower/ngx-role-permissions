@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, Input, ViewContainerRef } from '@angular/core';
 
 import { PermissionService } from '../services/permission.service';
 
@@ -14,5 +14,12 @@ import { PermissionService } from '../services/permission.service';
 export class CanPermitDirective {
   constructor(
     private permissionService: PermissionService,
+    private _viewContainer: ViewContainerRef,
   ) {}
+
+  // @Input()
+  // set canPermit(condition: any) {
+  //   this._context.$implicit = this._context.ngIf = condition;
+  //   this._updateView();
+  // }
 }
