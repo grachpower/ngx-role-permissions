@@ -9,7 +9,7 @@ import { ChildViewComponent } from './child-view/child-view.component';
   imports: [
     CommonModule,
     ChildRoutingModule,
-    NgxPermissionModule.forChild('child', {
+    NgxPermissionModule.forChild('childModule1', {
       myChildElement: ['admin'],
     })
   ],

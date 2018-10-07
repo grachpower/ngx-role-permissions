@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     AppRoutingModule,
     NgxPermissionModule.forRoot({
-      child: ['admin', 'user'],
+      childOne: ['admin', 'user'],
       childTwo: ['user'],
     }),
   ],

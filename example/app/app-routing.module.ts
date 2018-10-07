@@ -9,7 +9,7 @@ const routes: Routes = [
     loadChildren: './pages/child/child.module#ChildModule',
     canLoad: [PermissionGuard],
     data: {
-      permissionElement: 'child',
+      permissionElement: 'childOne',
     }
   },
   {

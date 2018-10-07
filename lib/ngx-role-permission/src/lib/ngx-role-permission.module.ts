@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { Inject, ModuleWithProviders, NgModule, Optional } from '@angular/core';
 
 import { CanPermitDirective } from './directives/can-permit.directive';
 import { PERMISSION_CONFIG_TOKEN } from './tokens/permission-config.token';
@@ -6,6 +6,7 @@ import { PermissionConfigInterface } from './interface/permissionConfig.interfac
 import { resolveFeatureConfig } from './helpers/resolve-feature-config';
 import { PermissionService } from './services/permission.service';
 import { PermissionGuard } from './guards/permission.guard';
+import { FEATURE_CONFIG_NAME_TOKEN, FEATURE_CONFIG_VALUE_TOKEN } from './tokens/feature-config.token';
 
 @NgModule({
   imports: [],
@@ -20,6 +21,19 @@ import { PermissionGuard } from './guards/permission.guard';
   ]
 })
 export class NgxPermissionModule {
+  constructor(
+    permissionService: PermissionService,
+    @Inject(PERMISSION_CONFIG_TOKEN) permissionConfigs: PermissionConfigInterface[],
+    @Optional() @Inject(FEATURE_CONFIG_NAME_TOKEN) featureConfigName: string,
+    @Optional() @Inject(FEATURE_CONFIG_VALUE_TOKEN) featureConfigValue: PermissionConfigInterface,
+  ) {
+    permissionService._updateConfig(permissionConfigs);
+
+    if (featureConfigName && featureConfigValue) {
+      permissionService._addFeatureConfig(featureConfigName, featureConfigValue);
+    }
+  }
+
   public static forRoot(config: PermissionConfigInterface): ModuleWithProviders {
     return {
       ngModule: NgxPermissionModule,
@@ -39,11 +53,13 @@ export class NgxPermissionModule {
       ngModule: NgxPermissionModule,
       providers: [
         {
-          provide: PERMISSION_CONFIG_TOKEN,
-          useFactory: resolveFeatureConfig,
-          deps: [featureName, config],
-          multi: true,
-        }
+          provide: FEATURE_CONFIG_NAME_TOKEN,
+          useValue: featureName,
+        },
+        {
+          provide: FEATURE_CONFIG_VALUE_TOKEN,
+          useValue: config,
+        },
       ],
     };
   }
