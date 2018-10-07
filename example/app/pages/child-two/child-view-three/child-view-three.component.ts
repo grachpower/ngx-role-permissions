@@ -5,4 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './child-view-three.component.html',
   styleUrls: ['./child-view-three.component.css']
 })
-export class ChildViewThreeComponent {}
+export class ChildViewThreeComponent { }

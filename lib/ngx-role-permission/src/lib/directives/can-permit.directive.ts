@@ -18,7 +18,6 @@ export class CanPermitDirective {
     private permissionService: PermissionService,
     private _viewContainer: ViewContainerRef,
     private _templateRef: TemplateRef<any>,
-    private cdRef: ChangeDetectorRef,
     @Optional() @Inject(FEATURE_CONFIG_NAME_TOKEN) private featureName: string,
   ) {}
 
@@ -29,6 +28,7 @@ export class CanPermitDirective {
       .pipe(first())
       .subscribe((res: boolean) => {
         if (!!res && !!this._templateRef) {
+          this._viewContainer.clear();
           this._viewContainer.createEmbeddedView(this._templateRef, {});
         } {
           this._viewContainer.clear();
@@ -39,6 +39,7 @@ export class CanPermitDirective {
       .pipe(first())
       .subscribe((res: boolean) => {
         if (!!res && !!this._templateRef) {
+          this._viewContainer.clear();
           this._viewContainer.createEmbeddedView(this._templateRef, {});
         } {
           this._viewContainer.clear();
