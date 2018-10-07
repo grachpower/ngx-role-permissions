@@ -7,8 +7,8 @@ import { PermissionConfigInterface } from '../interface/permissionConfig.interfa
 
 @Injectable()
 export class PermissionService {
-  private initialRoles = [];
-  private roles$ = new BehaviorSubject<string[]>(this.initialRoles);
+  private _initialRoles = [];
+  private _roles$ = new BehaviorSubject<string[]>(this._initialRoles);
   private _configs$ = new BehaviorSubject<PermissionConfigInterface>({});
   private _featureConfigs = new BehaviorSubject<PermissionConfigInterface>({});
 
@@ -17,18 +17,18 @@ export class PermissionService {
   ) {}
 
   public clearRoles(): void {
-    this.roles$.next(null);
+    this._roles$.next(null);
   }
 
   public setRoles(roles: string[]): void {
-    this.roles$.next(roles);
+    this._roles$.next(roles);
   }
 
-  public getRoles$(): Observable<string[]> {
-    return this.roles$;
+  public getRoles(): Observable<string[]> {
+    return this._roles$;
   }
 
-  public get config$(): Observable<PermissionConfigInterface> {
+  public get config(): Observable<PermissionConfigInterface> {
     return this._configs$.asObservable();
   }
 
@@ -43,9 +43,9 @@ export class PermissionService {
     });
   }
 
-  public canAccess$(pageOrElement: string): Observable<boolean> {
-    return this.config$.pipe(
-      withLatestFrom(this.roles$),
+  public canAccess(pageOrElement: string): Observable<boolean> {
+    return this.config.pipe(
+      withLatestFrom(this._roles$),
       map(([config, roles]: [PermissionConfigInterface, string[]]) => {
         if (!config[pageOrElement]) {
           return false;
@@ -62,9 +62,9 @@ export class PermissionService {
     );
   }
 
-  public canAccessFeature$(featureName: string, pageOrElement: string): Observable<boolean> {
+  public canAccessFeature(featureName: string, pageOrElement: string): Observable<boolean> {
     return this._featureConfigs.pipe(
-      withLatestFrom(this.roles$),
+      withLatestFrom(this._roles$),
       map(([configs, roles]: [PermissionConfigInterface, string[]]) => {
         if (!configs[featureName]) {
           console.error(`No feature ${featureName} provided`);

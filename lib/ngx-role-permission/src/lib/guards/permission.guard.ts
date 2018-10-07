@@ -23,10 +23,10 @@ export class PermissionGuard implements CanActivate, CanLoad {
     const permissionElementName = next.data.permissionElement;
 
     if (this.featureName) {
-      return this.permissionService.canAccessFeature$(this.featureName, permissionElementName).pipe(first());
+      return this.permissionService.canAccessFeature(this.featureName, permissionElementName).pipe(first());
     }
 
-    return this.permissionService.canAccess$(permissionElementName).pipe(first());
+    return this.permissionService.canAccess(permissionElementName).pipe(first());
   }
 
   public canLoad(route: Route): Observable<boolean> {
@@ -39,9 +39,9 @@ export class PermissionGuard implements CanActivate, CanLoad {
     const permissionElementName = route.data.permissionElement;
 
     if (this.featureName) {
-      return this.permissionService.canAccessFeature$(this.featureName, permissionElementName).pipe(first());
+      return this.permissionService.canAccessFeature(this.featureName, permissionElementName).pipe(first());
     } else {
-      return this.permissionService.canAccess$(permissionElementName).pipe(first());
+      return this.permissionService.canAccess(permissionElementName).pipe(first());
     }
   }
 }

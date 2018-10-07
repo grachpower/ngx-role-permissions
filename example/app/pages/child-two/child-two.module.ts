@@ -13,6 +13,8 @@ import { ChildViewThreeComponent } from './child-view-three/child-view-three.com
     NgxPermissionModule.forChild('childModule2', {
       childInnerOne: ['user'],
       childInnerTwo: ['admin', 'user'],
+      elementOne: ['user', 'admin'],
+      elementTwo: ['admin'],
     }),
   ],
   declarations: [ChildViewTwoComponent, ChildViewThreeComponent]

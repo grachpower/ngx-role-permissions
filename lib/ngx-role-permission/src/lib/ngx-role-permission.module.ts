@@ -3,7 +3,6 @@ import { Inject, ModuleWithProviders, NgModule, Optional } from '@angular/core';
 import { CanPermitDirective } from './directives/can-permit.directive';
 import { PERMISSION_CONFIG_TOKEN } from './tokens/permission-config.token';
 import { PermissionConfigInterface } from './interface/permissionConfig.interface';
-import { resolveFeatureConfig } from './helpers/resolve-feature-config';
 import { PermissionService } from './services/permission.service';
 import { PermissionGuard } from './guards/permission.guard';
 import { FEATURE_CONFIG_NAME_TOKEN, FEATURE_CONFIG_VALUE_TOKEN } from './tokens/feature-config.token';
