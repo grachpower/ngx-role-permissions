@@ -24,9 +24,6 @@ export class CanPermitDirective {
 
   @Input()
   set canPermit(elementName: string) {
-    // this._viewContainer.createEmbeddedView(this._templateRef, {});
-
-    // return;
     if (!!this.featureName) {
       this.permissionService.canAccessFeature(this.featureName, elementName)
       .pipe(first())
