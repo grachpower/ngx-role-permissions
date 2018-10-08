@@ -30,7 +30,7 @@ export class CanPermitDirective {
         if (!!res && !!this._templateRef) {
           this._viewContainer.clear();
           this._viewContainer.createEmbeddedView(this._templateRef, {});
-        } {
+        } else {
           this._viewContainer.clear();
         }
       });
@@ -41,7 +41,7 @@ export class CanPermitDirective {
         if (!!res && !!this._templateRef) {
           this._viewContainer.clear();
           this._viewContainer.createEmbeddedView(this._templateRef, {});
-        } {
+        } else {
           this._viewContainer.clear();
         }
       });
