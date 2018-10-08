@@ -10,7 +10,16 @@
     "e2e": "ng e2e",
     "build:lib": "ng build ngx-role-permission"
   },
-  "private": true,
+  "author": "Artem Andreev",
+  "homepage": "https://github.com/grachpower/ngx-role-permissions#readme",
+  "url": "https://github.com/grachpower/ngx-role-permissions/issues",
+  "email": "amiscary@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grachpower/ngx-role-permissions.git"
+  },
+  "license": "MIT",
+  "private": false,
   "dependencies": {
     "@angular/animations": "^6.1.0",
     "@angular/common": "^6.1.0",

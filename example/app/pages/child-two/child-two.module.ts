@@ -11,7 +11,7 @@ import { ChildViewThreeComponent } from './child-view-three/child-view-three.com
     CommonModule,
     ChildTwoRoutingModule,
     NgxPermissionModule.forChild('childModule2', {
-      childInnerOne: ['user'],
+      childInnerOne: ['admin'],
       childInnerTwo: ['admin', 'user'],
       elementOne: ['user', 'admin'],
       elementTwo: ['admin'],
