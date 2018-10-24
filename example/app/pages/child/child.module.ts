@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxPermissionModule } from 'ngx-role-permission';
+import { NgxPermissionModule } from 'ngx-role-permissions';
 
 import { ChildRoutingModule } from './child-routing.module';
 import { ChildViewComponent } from './child-view/child-view.component';

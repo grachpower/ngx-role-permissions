@@ -18,11 +18,11 @@
       "dom"
     ],
     "paths": {
-      "ngx-role-permission": [
-        "dist/ngx-role-permission"
+      "ngx-role-permissions": [
+        "dist/ngx-role-permissions"
       ],
-      "ngx-role-permission/*": [
-        "dist/ngx-role-permission/*"
+      "ngx-role-permissions/*": [
+        "dist/ngx-role-permissions/*"
       ]
     }
   }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PermissionGuard } from 'ngx-role-permission';
+import { PermissionGuard } from 'ngx-role-permissions';
 
 import { ChildViewTwoComponent } from './child-view-two/child-view-two.component';
 import { ChildViewThreeComponent } from './child-view-three/child-view-three.component';

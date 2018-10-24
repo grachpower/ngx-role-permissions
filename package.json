@@ -1,5 +1,5 @@
 {
-  "name": "ngx-role-permissions",
+  "name": "ngx-role-permission",
   "version": "1.0.1",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:lib": "ng build ngx-role-permission"
+    "build:lib": "ng build ngx-role-permissions"
   },
   "author": "Artem Andreev",
   "homepage": "https://github.com/grachpower/ngx-role-permissions#readme",

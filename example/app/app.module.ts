@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgxPermissionModule } from 'ngx-role-permission';
+import { NgxPermissionModule } from 'ngx-role-permissions';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';

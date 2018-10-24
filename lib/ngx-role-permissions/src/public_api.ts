@@ -23,3 +23,9 @@ export * from './lib/services/permission.service';
  * Models
  */
 export * from './lib/models/role';
+
+/**
+ * Tokens
+ */
+export * from './lib/tokens/permission-config.token';
+export * from './lib/tokens/feature-config.token';

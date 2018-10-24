@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PermissionGuard } from 'ngx-role-permission';
+import { PermissionGuard } from 'ngx-role-permissions';
 
 
 const routes: Routes = [

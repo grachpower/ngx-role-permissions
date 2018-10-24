@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-role-permissions": {
+    "ngx-role-permission": {
       "root": "",
       "sourceRoot": "example",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-role-permissions",
+            "outputPath": "dist/ngx-role-permission",
             "index": "example/index.html",
             "main": "example/main.ts",
             "polyfills": "example/polyfills.ts",
@@ -31,8 +31,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "example/environments/environment.ts",
-                  "with": "example/environments/environment.prod.ts"
+                  "replace": "example/environment/environment.ts",
+                  "with": "example/environment/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-role-permissions:build"
+            "browserTarget": "ngx-role-permission:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-role-permissions:build:production"
+              "browserTarget": "ngx-role-permission:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-role-permissions:build"
+            "browserTarget": "ngx-role-permission:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "ngx-role-permissions-e2e": {
+    "ngx-role-permission-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-role-permissions:serve"
+            "devServerTarget": "ngx-role-permission:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-role-permissions:serve:production"
+              "devServerTarget": "ngx-role-permission:serve:production"
             }
           }
         },
@@ -122,33 +122,33 @@
         }
       }
     },
-    "ngx-role-permission": {
-      "root": "lib/ngx-role-permission",
-      "sourceRoot": "lib/ngx-role-permission/src",
+    "ngx-role-permissions": {
+      "root": "lib/ngx-role-permissions",
+      "sourceRoot": "lib/ngx-role-permissions/src",
       "projectType": "library",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "lib/ngx-role-permission/tsconfig.lib.json",
-            "project": "lib/ngx-role-permission/ng-package.json"
+            "tsConfig": "lib/ngx-role-permissions/tsconfig.lib.json",
+            "project": "lib/ngx-role-permissions/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "lib/ngx-role-permission/src/test.ts",
-            "tsConfig": "lib/ngx-role-permission/tsconfig.spec.json",
-            "karmaConfig": "lib/ngx-role-permission/karma.conf.js"
+            "main": "lib/ngx-role-permissions/src/test.ts",
+            "tsConfig": "lib/ngx-role-permissions/tsconfig.spec.json",
+            "karmaConfig": "lib/ngx-role-permissions/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "lib/ngx-role-permission/tsconfig.lib.json",
-              "lib/ngx-role-permission/tsconfig.spec.json"
+              "lib/ngx-role-permissions/tsconfig.lib.json",
+              "lib/ngx-role-permissions/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -158,5 +158,5 @@
       }
     }
   },
-  "defaultProject": "ngx-role-permissions"
+  "defaultProject": "ngx-role-permission"
 }

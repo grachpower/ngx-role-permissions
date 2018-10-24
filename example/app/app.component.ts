@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PermissionService } from 'ngx-role-permission';
+import { PermissionService } from 'ngx-role-permissions';
 
 @Component({
   selector: 'app-root',
