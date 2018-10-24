@@ -1,6 +1,6 @@
 {
   "name": "ngx-role-permissions",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,6 +18,37 @@
     "type": "git",
     "url": "https://github.com/grachpower/ngx-role-permissions.git"
   },
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular 2",
+    "angular4",
+    "angular 4",
+    "angular5",
+    "angular 5",
+    "angular 6",
+    "angular6",
+    "angularx",
+    "angular-x",
+    "ng",
+    "ngx",
+    "ng2",
+    "ng4",
+    "ng5",
+    "permissions",
+    "permission",
+    "role",
+    "roles",
+    "guard",
+    "router",
+    "ngx-router",
+    "angular2-router",
+    "angular4-router",
+    "access-control",
+    "access",
+    "acl",
+    "rbac"
+  ],
   "license": "MIT",
   "private": false,
   "dependencies": {
@@ -58,5 +89,8 @@
     "tslib": "^1.9.0",
     "tslint": "~5.11.0",
     "typescript": "~2.9.2"
+  },
+  "engines": {
+    "node": ">=6.0.0"
   }
 }
