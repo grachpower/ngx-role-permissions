@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, withLatestFrom, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
+import { map, withLatestFrom, tap, zip } from 'rxjs/operators';
 
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionConfigInterface } from '../interface/permissionConfig.interface';
@@ -44,8 +44,7 @@ export class PermissionService {
   }
 
   public canAccess(pageOrElement: string): Observable<boolean> {
-    return this.config.pipe(
-      withLatestFrom(this._roles$),
+    return combineLatest(this.config, this._roles$).pipe(
       map(([config, roles]: [PermissionConfigInterface, string[]]) => {
         if (!config[pageOrElement]) {
           return false;
