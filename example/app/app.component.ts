@@ -17,5 +17,11 @@ export class AppComponent implements OnInit {
     this.permissionService.setRoles([
       'user',
     ]);
+
+    // append role
+    this.permissionService.addRole('admin');
+
+    // remove role
+    this.permissionService.removeRole('admin');
   }
 }

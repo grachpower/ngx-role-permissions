@@ -24,6 +24,26 @@ export class PermissionService {
     this._roles$.next(roles);
   }
 
+  public addRole(role: string): void {
+    const roles: string[] = this._roles$.value;
+
+    if (roles.includes(role)) {
+      return;
+    }
+
+    this._roles$.next([...roles, role]);
+  }
+
+  public removeRole(role: string): void {
+    const roles: string[] = this._roles$.value;
+
+    if (!roles.includes(role)) {
+      return;
+    }
+
+    this._roles$.next(roles.filter((availableRole: string) => role === availableRole));
+  }
+
   public getRoles(): Observable<string[]> {
     return this._roles$;
   }
