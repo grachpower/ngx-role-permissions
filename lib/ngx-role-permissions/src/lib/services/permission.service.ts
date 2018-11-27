@@ -41,7 +41,7 @@ export class PermissionService {
       return;
     }
 
-    this._roles$.next(roles.filter((availableRole: string) => role === availableRole));
+    this._roles$.next(roles.filter((availableRole: string) => role !== availableRole));
   }
 
   public getRoles(): Observable<string[]> {
