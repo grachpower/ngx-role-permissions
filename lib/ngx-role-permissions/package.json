@@ -1,6 +1,6 @@
 {
   "name": "ngx-role-permissions",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Artem Andreev",
   "homepage": "https://github.com/grachpower/ngx-role-permissions#readme",
   "url": "https://github.com/grachpower/ngx-role-permissions/issues",
@@ -42,7 +42,7 @@
     "url": "https://github.com/grachpower/ngx-role-permissions.git"
   },
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0  || ^7.0.0"
   }
 }
