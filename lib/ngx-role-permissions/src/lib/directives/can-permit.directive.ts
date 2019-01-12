@@ -25,7 +25,6 @@ export class CanPermitDirective {
   set canPermit(elementName: string) {
     if (!!this.featureName) {
       this.permissionService.canAccessFeature(this.featureName, elementName)
-      .pipe(first())
       .subscribe((res: boolean) => {
         if (!!res && !!this._templateRef) {
           this._viewContainer.clear();
@@ -36,7 +35,6 @@ export class CanPermitDirective {
       });
     } else {
       this.permissionService.canAccess(elementName)
-      .pipe(first())
       .subscribe((res: boolean) => {
         if (!!res && !!this._templateRef) {
           this._viewContainer.clear();
