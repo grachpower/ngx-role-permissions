@@ -1,4 +1,6 @@
 # ngx-role-permissions
+[![npm version](https://badge.fury.io/js/ngx-role-permissions.svg)](https://badge.fury.io/js/ngx-role-permissions)
+[![Build Status](https://travis-ci.com/grachpower/ngx-role-permissions.svg?branch=master)](https://travis-ci.com/grachpower/ngx-role-permissions)
 
 Permission and roles based access control for your angular(angular 6,7+) applications
 
