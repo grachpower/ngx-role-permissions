@@ -14,6 +14,14 @@ export class AppComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.permissionService.getRoles().subscribe((roles: string[]) => {
+      console.log(roles);
+    });
+
+    this.permissionService.config.subscribe((config) => {
+      console.log(config);
+    });
+
     this.permissionService.setRoles([
       'user',
     ]);

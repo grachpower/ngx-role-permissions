@@ -4,6 +4,7 @@ import { NgxPermissionModule } from 'ngx-role-permissions';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DataModule } from "./components/data-component/data.module";
 
 @NgModule({
   declarations: [
@@ -12,9 +13,11 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    DataModule,
     NgxPermissionModule.forRoot({
       childOne: ['admin', 'user'],
       childTwo: ['user'],
+      pageElement: ['admin'],
     }),
   ],
   providers: [],

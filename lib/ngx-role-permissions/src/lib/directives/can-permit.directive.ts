@@ -1,6 +1,15 @@
-import { Directive, Input, ViewContainerRef, TemplateRef, Optional, Inject, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {
+  Directive,
+  Input,
+  ViewContainerRef,
+  TemplateRef,
+  Optional,
+  Inject,
+  OnDestroy,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
+import { SubscriptionLike } from 'rxjs';
 
 import { PermissionService } from '../services/permission.service';
 import { FEATURE_CONFIG_NAME_TOKEN } from '../tokens/feature-config.token';
@@ -14,8 +23,8 @@ import { FEATURE_CONFIG_NAME_TOKEN } from '../tokens/feature-config.token';
 @Directive({
   selector: '[canPermit]',
 })
-export class CanPermitDirective implements OnDestroy {
-  private destroySubj$ = new Subject();
+export class CanPermitDirective implements OnChanges, OnDestroy {
+  private permissionSubscription: SubscriptionLike;
 
   constructor(
     private permissionService: PermissionService,
@@ -24,11 +33,25 @@ export class CanPermitDirective implements OnDestroy {
     @Optional() @Inject(FEATURE_CONFIG_NAME_TOKEN) private featureName: string,
   ) {}
 
-  @Input()
-  set canPermit(elementName: string) {
+  @Input() canPermit: string;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    this.initPermissionCheck(changes.canPermit.currentValue);
+  }
+
+  public ngOnDestroy(): void {
+    this.permissionSubscription.unsubscribe();
+    this.permissionSubscription = null;
+  }
+
+  private initPermissionCheck(elementName: string): void {
+    if (!!this.permissionSubscription) {
+      this.permissionSubscription.unsubscribe();
+      this.permissionSubscription = null;
+    }
+
     if (!!this.featureName) {
-      this.permissionService.canAccessFeature(this.featureName, elementName)
-        .pipe(takeUntil(this.destroySubj$))
+      this.permissionSubscription = this.permissionService.canAccessFeature(this.featureName, elementName)
         .subscribe((res: boolean) => {
           if (!!res && !!this._templateRef) {
             this._viewContainer.clear();
@@ -38,8 +61,7 @@ export class CanPermitDirective implements OnDestroy {
           }
         });
     } else {
-      this.permissionService.canAccess(elementName)
-        .pipe(takeUntil(this.destroySubj$))
+      this.permissionSubscription = this.permissionService.canAccess(elementName)
         .subscribe((res: boolean) => {
           if (!!res && !!this._templateRef) {
             this._viewContainer.clear();
@@ -49,10 +71,5 @@ export class CanPermitDirective implements OnDestroy {
           }
         });
     }
-  }
-
-  public ngOnDestroy(): void {
-    this.destroySubj$.next();
-    this.destroySubj$.complete();
   }
 }

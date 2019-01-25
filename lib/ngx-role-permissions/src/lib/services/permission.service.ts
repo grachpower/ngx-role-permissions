@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
-import { map, withLatestFrom, tap, zip } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map, withLatestFrom } from 'rxjs/operators';
 
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionConfigInterface } from '../interface/permissionConfig.interface';
@@ -82,8 +82,7 @@ export class PermissionService {
   }
 
   public canAccessFeature(featureName: string, pageOrElement: string): Observable<boolean> {
-    return this._featureConfigs.pipe(
-      withLatestFrom(this._roles$),
+    return combineLatest(this._featureConfigs, this._roles$).pipe(
       map(([configs, roles]: [PermissionConfigInterface, string[]]) => {
         if (!configs[featureName]) {
           console.error(`No feature ${featureName} provided`);
