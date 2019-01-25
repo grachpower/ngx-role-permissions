@@ -8,7 +8,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:lib": "ng build ngx-role-permissions"
+    "build:lib": "ng build ngx-role-permissions",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "doc": "compodoc -p lib/ngx-role-permissions/tsconfig.lib.json -s"
   },
   "author": "Artem Andreev",
   "homepage": "https://github.com/grachpower/ngx-role-permissions#readme",
@@ -71,10 +73,12 @@
     "@angular/cli": "~6.2.3",
     "@angular/compiler-cli": "^6.1.0",
     "@angular/language-service": "^6.1.0",
+    "@compodoc/compodoc": "^1.1.7",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.3.0",
+    "conventional-changelog-cli": "^2.0.11",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.0.0",
