@@ -60,11 +60,12 @@ export class AppModule { }
 SharedModule
 
 If you use a SharedModule that you import in multiple other feature modules, you can export the NgxPermissionModule to make sure you don't have to import it in every module.
+NgxPermissionModule with or without `forRoot` or `forChild` notations provides `canPermit` directive so you should import it in every module you use permission directives.  
 ```typescript
 @NgModule({
     exports: [
         CommonModule,
-        NgxPermissionModule
+        NgxPermissionModule,
     ]
 })
 export class SharedModule { }
