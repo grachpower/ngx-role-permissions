@@ -1,11 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, combineLatest } from 'rxjs';
-import { map, withLatestFrom, tap, zip } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { map, withLatestFrom } from 'rxjs/operators';
 
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionConfigInterface } from '../interface/permissionConfig.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PermissionService {
   private _initialRoles = [];
   private _roles$ = new BehaviorSubject<string[]>(this._initialRoles);
@@ -54,6 +56,8 @@ export class PermissionService {
 
   public _updateConfig(permissionConfigs: PermissionConfigInterface[]): void {
     this._configs$.next(permissionConfigs.reduce((acc, curr: PermissionConfigInterface) => ({...acc, ...curr}), {}));
+
+    console.log('update config', this._configs$.value);
   }
 
   public _addFeatureConfig(featureName: string, permissionConfig: PermissionConfigInterface): void {
@@ -61,6 +65,8 @@ export class PermissionService {
       ...this._featureConfigs.value,
       [featureName]: permissionConfig,
     });
+
+    console.log('add feature', this._featureConfigs.value);
   }
 
   public canAccess(pageOrElement: string): Observable<boolean> {

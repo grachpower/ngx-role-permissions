@@ -28,6 +28,8 @@ export class NgxPermissionModule {
   ) {
     permissionService._updateConfig(permissionConfigs);
 
+    console.log('init module');
+
     if (featureConfigName && featureConfigValue) {
       permissionService._addFeatureConfig(featureConfigName, featureConfigValue);
     }
@@ -37,7 +39,6 @@ export class NgxPermissionModule {
     return {
       ngModule: NgxPermissionModule,
       providers: [
-        PermissionService,
         {
           provide: PERMISSION_CONFIG_TOKEN,
           useValue: config,
@@ -51,6 +52,7 @@ export class NgxPermissionModule {
     return {
       ngModule: NgxPermissionModule,
       providers: [
+        // PermissionService,
         {
           provide: FEATURE_CONFIG_NAME_TOKEN,
           useValue: featureName,

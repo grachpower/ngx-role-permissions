@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PermissionService } from 'ngx-role-permissions';
+import {PermissionService} from '../../../../../lib/ngx-role-permissions/src/lib/services/permission.service';
 
 @Component({
   selector: 'app-child-view-three',

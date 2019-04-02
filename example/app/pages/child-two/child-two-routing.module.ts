@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PermissionGuard } from 'ngx-role-permissions';
 
 import { ChildViewTwoComponent } from './child-view-two/child-view-two.component';
 import { ChildViewThreeComponent } from './child-view-three/child-view-three.component';
+import {PermissionGuard} from '../../../../lib/ngx-role-permissions/src/lib/guards/permission.guard';
 
 const routes: Routes = [
   {

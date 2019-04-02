@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PermissionGuard } from 'ngx-role-permissions';
+import {PermissionGuard} from '../../lib/ngx-role-permissions/src/lib/guards/permission.guard';
 
 
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
     data: {
       permissionElement: 'childTwo',
     }
-  }
+  },
 ];
 
 @NgModule({
