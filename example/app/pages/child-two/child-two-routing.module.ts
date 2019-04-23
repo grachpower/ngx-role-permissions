@@ -13,7 +13,7 @@ const routes: Routes = [
     data: {
       permissionConfig: {
         permissionElement: 'childInnerOne',
-        redirectRoute: '',
+        redirectRoute: '/child1',
       }
     }
   },
@@ -22,8 +22,10 @@ const routes: Routes = [
     component: ChildViewThreeComponent,
     canActivate: [PermissionGuard],
     data: {
-      permissionElement: 'childInnerTwo',
-      redirectRoute: '/child1',
+      permissionConfig: {
+        permissionElement: 'childInnerTwo',
+        redirectRoute: '/child1',
+      },
     }
   }
 ];

@@ -1,7 +1,7 @@
 import { Injectable, Optional, Inject } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import {first, tap} from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 
 import { PermissionService } from '../services/permission.service';
 import { FEATURE_CONFIG_NAME_TOKEN } from '../tokens/feature-config.token';
