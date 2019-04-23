@@ -8,6 +8,7 @@ export * from './lib/ngx-role-permission.module';
  * Directives
  */
 export * from './lib/directives/can-permit.directive';
+export * from './lib/directives/can-not-permit.directive';
 
 /**
  * Guards

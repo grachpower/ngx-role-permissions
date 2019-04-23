@@ -1,6 +1,7 @@
 import { Inject, ModuleWithProviders, NgModule, Optional } from '@angular/core';
 
 import { CanPermitDirective } from './directives/can-permit.directive';
+import { CanNotPermitDirective } from './directives/can-not-permit.directive';
 import { PERMISSION_CONFIG_TOKEN } from './tokens/permission-config.token';
 import { PermissionConfigInterface } from './interface/permissionConfig.interface';
 import { PermissionService } from './services/permission.service';
@@ -11,12 +12,14 @@ import { FEATURE_CONFIG_NAME_TOKEN, FEATURE_CONFIG_VALUE_TOKEN } from './tokens/
   imports: [],
   declarations: [
     CanPermitDirective,
+    CanNotPermitDirective,
   ],
   providers: [
     PermissionGuard,
   ],
   exports: [
     CanPermitDirective,
+    CanNotPermitDirective,
   ]
 })
 export class NgxPermissionModule {

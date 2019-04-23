@@ -13,6 +13,7 @@ import { DataModule } from '../../components/data-component/data.module';
     DataModule,
     NgxPermissionModule.forChild('childModule1', {
       myChildElement: ['admin'],
+      inversePermiter: ['admin'],
     })
   ],
   declarations: [ChildViewComponent],
