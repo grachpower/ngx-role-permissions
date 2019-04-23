@@ -78,7 +78,7 @@ export class PermissionGuard implements CanActivate, CanLoad {
     }
   }
 
-  private getCanAccess(featureName: string | null, guardConfig: RouteParamsConfig): Observable<boolean >{
+  private getCanAccess(featureName: string | null, guardConfig: RouteParamsConfig): Observable<boolean> {
     if (!!featureName) {
       return this.permissionService.canAccessFeature(this.featureName, guardConfig.permissionElement).pipe(first());
     } else {
