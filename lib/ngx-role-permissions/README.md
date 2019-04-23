@@ -126,6 +126,14 @@ export class AppComponent implements OnInit {
 
 Usage in templates 
 
+`*canPermit` check if element roles includes current user role
+```html
+<div class="element-two" *canPermit="'yourFeatureElement1'">
+    Feature element one directive example
+</div>
+```
+
+`*canNotPermit` check if element roles excludes current user role
 ```html
 <div class="element-two" *canPermit="'yourFeatureElement1'">
     Feature element one directive example
