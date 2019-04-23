@@ -146,7 +146,9 @@ const routes: Routes = [
     component: ChildComponent1,
     canActivate: [PermissionGuard],
     data: {
-      permissionElement: 'yourFeatureElement1',
+      permissionConfig: {
+        permissionElement: 'yourFeatureElement2',
+      }
     }
   },
   {
@@ -154,7 +156,10 @@ const routes: Routes = [
     component: ChildComponent2,
     canActivate: [PermissionGuard],
     data: {
-      permissionElement: 'yourFeatureElement2',
+      permissionConfig: {
+        permissionElement: 'yourFeatureElement2',
+        redirectRoute: '/dashboard',
+      }
     }
   }
 ];

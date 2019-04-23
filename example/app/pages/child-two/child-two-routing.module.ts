@@ -11,7 +11,10 @@ const routes: Routes = [
     component: ChildViewTwoComponent,
     canActivate: [PermissionGuard],
     data: {
-      permissionElement: 'childInnerOne',
+      permissionConfig: {
+        permissionElement: 'childInnerOne',
+        redirectRoute: '/child1',
+      }
     }
   },
   {
@@ -19,7 +22,10 @@ const routes: Routes = [
     component: ChildViewThreeComponent,
     canActivate: [PermissionGuard],
     data: {
-      permissionElement: 'childInnerTwo',
+      permissionConfig: {
+        permissionElement: 'childInnerTwo',
+        redirectRoute: '/child1',
+      },
     }
   }
 ];
