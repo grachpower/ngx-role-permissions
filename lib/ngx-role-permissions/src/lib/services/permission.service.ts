@@ -1,70 +1,68 @@
-import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionConfigInterface } from '../interface/permissionConfig.interface';
+import { PermissionsStoreService } from './permissions-store.service';
+import { FEATURE_PERMISSION_CONFIG } from '../tokens/feature-config.token';
 
 @Injectable()
 export class PermissionService {
-  private _initialRoles = [];
-  private _roles$ = new BehaviorSubject<string[]>(this._initialRoles);
-  private _configs$ = new BehaviorSubject<PermissionConfigInterface>({});
-  private _featureConfigs = new BehaviorSubject<PermissionConfigInterface>({});
-
   constructor(
-    @Inject(PERMISSION_CONFIG_TOKEN) private permissionConfigs: PermissionConfigInterface[],
-  ) {}
+    private permissionStore: PermissionsStoreService,
+    @Optional() @Inject(PERMISSION_CONFIG_TOKEN) private permissionConfigs: PermissionConfigInterface[],
+    @Optional() @Inject(FEATURE_PERMISSION_CONFIG) private featureConfigs: [string, PermissionConfigInterface][],
+  ) {
+    if (permissionConfigs) {
+      this.permissionStore.updateConfig(permissionConfigs);
+    }
+
+    if (featureConfigs) {
+      featureConfigs.forEach(([featureConfigName, featureConfig]: [string, PermissionConfigInterface]) => {
+        this.permissionStore.addFeatureConfig(featureConfigName, featureConfig);
+      });
+    }
+  }
 
   public clearRoles(): void {
-    this._roles$.next(null);
+    this.permissionStore._roles$.next(null);
   }
 
   public setRoles(roles: string[]): void {
-    this._roles$.next(roles);
+    this.permissionStore._roles$.next(roles);
   }
 
   public addRole(role: string): void {
-    const roles: string[] = this._roles$.value;
+    const roles: string[] = this.permissionStore._roles$.value;
 
     if (roles.includes(role)) {
       return;
     }
 
-    this._roles$.next([...roles, role]);
+    this.permissionStore._roles$.next([...roles, role]);
   }
 
   public removeRole(role: string): void {
-    const roles: string[] = this._roles$.value;
+    const roles: string[] = this.permissionStore._roles$.value;
 
     if (!roles.includes(role)) {
       return;
     }
 
-    this._roles$.next(roles.filter((availableRole: string) => role !== availableRole));
+    this.permissionStore._roles$.next(roles.filter((availableRole: string) => role !== availableRole));
   }
 
   public getRoles(): Observable<string[]> {
-    return this._roles$;
+    return this.permissionStore._roles$;
   }
 
   public get config(): Observable<PermissionConfigInterface> {
-    return this._configs$.asObservable();
-  }
-
-  public _updateConfig(permissionConfigs: PermissionConfigInterface[]): void {
-    this._configs$.next(permissionConfigs.reduce((acc, curr: PermissionConfigInterface) => ({...acc, ...curr}), {}));
-  }
-
-  public _addFeatureConfig(featureName: string, permissionConfig: PermissionConfigInterface): void {
-    this._featureConfigs.next({
-      ...this._featureConfigs.value,
-      [featureName]: permissionConfig,
-    });
+    return this.permissionStore._configs$.asObservable();
   }
 
   public canAccess(pageOrElement: string): Observable<boolean> {
-    return combineLatest(this.config, this._roles$).pipe(
+    return combineLatest(this.config, this.permissionStore._roles$).pipe(
       map(([config, roles]: [PermissionConfigInterface, string[]]) => {
         if (!config[pageOrElement]) {
           return false;
@@ -82,7 +80,7 @@ export class PermissionService {
   }
 
   public canAccessFeature(featureName: string, pageOrElement: string): Observable<boolean> {
-    return combineLatest(this._featureConfigs, this._roles$).pipe(
+    return combineLatest(this.permissionStore._featureConfigs, this.permissionStore._roles$).pipe(
       map(([configs, roles]: [PermissionConfigInterface, string[]]) => {
         if (!configs[featureName]) {
           console.error(`No feature ${featureName} provided`);
