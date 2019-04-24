@@ -12,7 +12,10 @@ export class PermissionsStoreService {
   public _configs$ = new BehaviorSubject<PermissionConfigInterface>({});
 
   public updateConfig(permissionConfigs: PermissionConfigInterface[]): void {
-    this._configs$.next(this.concatAllConfigs([this._configs$.value, ...permissionConfigs]));
+    const configToAppend = this.concatAllConfigs(permissionConfigs);
+    const prevConfig = this._configs$.value;
+
+    this._configs$.next(this.concatTwoConfigs(prevConfig, configToAppend));
   }
 
   private concatAllConfigs(configs: PermissionConfigInterface[]): PermissionConfigInterface {
@@ -21,19 +24,18 @@ export class PermissionsStoreService {
     }, {} as PermissionConfigInterface);
   }
 
-  private concatTwoConfigs(originalConfig: PermissionConfigInterface, configTwo: PermissionConfigInterface): PermissionConfigInterface {
-    const firstKeys = Object.keys(originalConfig);
-    const lastKeys = Object.keys(originalConfig);
+  private concatTwoConfigs(originalConfig: PermissionConfigInterface, newConfig: PermissionConfigInterface): PermissionConfigInterface {
+    const prevConfKeys = Object.keys(originalConfig);
+    const newConfigKeys = Object.keys(newConfig);
+    const prevConfSet = new Set(prevConfKeys);
 
-    const firstSet = new Set(firstKeys);
-
-    lastKeys.forEach((key: string) => {
-      if (firstSet.has(key)) {
+    newConfigKeys.forEach((key: string) => {
+      if (prevConfSet.has(key)) {
         throw new Error(`Element '${key}' already defined`);
       }
     });
 
-    return {...originalConfig, ...configTwo};
+    return {...originalConfig, ...newConfig};
   }
 
 

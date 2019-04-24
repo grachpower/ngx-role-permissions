@@ -21,11 +21,6 @@ export * from './lib/guards/permission.guard';
 export * from './lib/services/permission.service';
 
 /**
- * Models
- */
-export * from './lib/models/role';
-
-/**
  * Tokens
  */
 export * from './lib/tokens/permission-config.token';
