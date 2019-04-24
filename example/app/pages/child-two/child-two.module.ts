@@ -15,6 +15,7 @@ import { ChildViewThreeComponent } from './child-view-three/child-view-three.com
       childInnerTwo: ['admin', 'user'],
       elementOne: ['user', 'admin'],
       elementTwo: ['admin'],
+      pageElement: ['admin'],
     }),
   ],
   declarations: [ChildViewTwoComponent, ChildViewThreeComponent]

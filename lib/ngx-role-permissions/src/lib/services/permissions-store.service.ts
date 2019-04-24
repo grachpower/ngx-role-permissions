@@ -12,8 +12,29 @@ export class PermissionsStoreService {
   public _configs$ = new BehaviorSubject<PermissionConfigInterface>({});
 
   public updateConfig(permissionConfigs: PermissionConfigInterface[]): void {
-    this._configs$.next(
-      permissionConfigs.reduce((acc, curr: PermissionConfigInterface) => ({...this._configs$.value, ...acc, ...curr}), {})
-    );
+    this._configs$.next(this.concatAllConfigs([this._configs$.value, ...permissionConfigs]));
   }
+
+  private concatAllConfigs(configs: PermissionConfigInterface[]): PermissionConfigInterface {
+    return configs.reduce((acc: PermissionConfigInterface, curr: PermissionConfigInterface) => {
+        return this.concatTwoConfigs(acc, curr);
+    }, {} as PermissionConfigInterface);
+  }
+
+  private concatTwoConfigs(originalConfig: PermissionConfigInterface, configTwo: PermissionConfigInterface): PermissionConfigInterface {
+    const firstKeys = Object.keys(originalConfig);
+    const lastKeys = Object.keys(originalConfig);
+
+    const firstSet = new Set(firstKeys);
+
+    lastKeys.forEach((key: string) => {
+      if (firstSet.has(key)) {
+        throw new Error(`Element '${key}' already defined`);
+      }
+    });
+
+    return {...originalConfig, ...configTwo};
+  }
+
+
 }
