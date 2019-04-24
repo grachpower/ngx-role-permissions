@@ -30,3 +30,4 @@ export * from './lib/models/role';
  */
 export * from './lib/tokens/permission-config.token';
 export * from './lib/tokens/feature-config.token';
+export * from './lib/tokens/initial-roles.token';
