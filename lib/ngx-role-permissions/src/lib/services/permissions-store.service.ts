@@ -12,10 +12,7 @@ export class PermissionsStoreService {
   public _configs$ = new BehaviorSubject<PermissionConfigInterface>({});
 
   public updateConfig(permissionConfigs: PermissionConfigInterface[]): void {
-    const configToAppend = this.concatAllConfigs(permissionConfigs);
-    const prevConfig = this._configs$.value;
-
-    this._configs$.next(this.concatTwoConfigs(prevConfig, configToAppend));
+    this._configs$.next(this.concatAllConfigs([this._configs$.value, ...permissionConfigs]));
   }
 
   private concatAllConfigs(configs: PermissionConfigInterface[]): PermissionConfigInterface {
