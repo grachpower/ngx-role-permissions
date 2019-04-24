@@ -15,11 +15,11 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.permissionService.getRoles().subscribe((roles: string[]) => {
-      console.log(roles);
+      console.log('Roles: ', roles);
     });
 
     this.permissionService.config.subscribe((config) => {
-      console.log(config);
+      console.log('Config: ', config);
     });
 
     this.permissionService.setRoles([

@@ -1,10 +1,9 @@
-import { Injectable, Optional, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 
 import { PermissionService } from '../services/permission.service';
-import { FEATURE_CONFIG_NAME_TOKEN } from '../tokens/feature-config.token';
 
 interface RouteParamsConfig {
   permissionElement: string;
@@ -24,7 +23,6 @@ export class PermissionGuard implements CanActivate, CanLoad {
   constructor(
     private permissionService: PermissionService,
     private router: Router,
-    @Optional() @Inject(FEATURE_CONFIG_NAME_TOKEN) private featureName: string,
   ) {}
 
   public canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
@@ -36,7 +34,7 @@ export class PermissionGuard implements CanActivate, CanLoad {
       return of(false);
     }
 
-    return this.getCanAccess(this.featureName, routeConfig)
+    return this.getCanAccess(routeConfig)
       .pipe(
         tap((canAccess: boolean) => {
           if (!canAccess && !isNil(routeConfig.redirectRoute)) {
@@ -55,7 +53,7 @@ export class PermissionGuard implements CanActivate, CanLoad {
       return of(false);
     }
 
-    return this.getCanAccess(this.featureName, routeConfig)
+    return this.getCanAccess(routeConfig)
       .pipe(
         tap((canAccess: boolean) => {
           if (!canAccess && !isNil(routeConfig.redirectRoute)) {
@@ -78,11 +76,7 @@ export class PermissionGuard implements CanActivate, CanLoad {
     }
   }
 
-  private getCanAccess(featureName: string | null, guardConfig: RouteParamsConfig): Observable<boolean> {
-    if (!!featureName) {
-      return this.permissionService.canAccessFeature(this.featureName, guardConfig.permissionElement).pipe(first());
-    } else {
-      return this.permissionService.canAccess(guardConfig.permissionElement).pipe(first());
-    }
+  private getCanAccess(guardConfig: RouteParamsConfig): Observable<boolean> {
+    return this.permissionService.canAccess(guardConfig.permissionElement).pipe(first());
   }
 }

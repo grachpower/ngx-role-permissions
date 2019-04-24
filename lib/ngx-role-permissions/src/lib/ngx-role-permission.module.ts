@@ -6,7 +6,6 @@ import { PERMISSION_CONFIG_TOKEN } from './tokens/permission-config.token';
 import { PermissionConfigInterface } from './interface/permissionConfig.interface';
 import { PermissionService } from './services/permission.service';
 import { PermissionGuard } from './guards/permission.guard';
-import { FEATURE_CONFIG_NAME_TOKEN, FEATURE_PERMISSION_CONFIG } from './tokens/feature-config.token';
 import { PermissionsStoreService } from './services/permissions-store.service';
 
 @NgModule({
@@ -38,18 +37,13 @@ export class NgxPermissionModule {
     };
   }
 
-  public static forChild(featureName: string, config: PermissionConfigInterface): ModuleWithProviders {
+  public static forChild(config: PermissionConfigInterface): ModuleWithProviders {
     return {
       ngModule: NgxPermissionModule,
       providers: [
         {
-          provide: FEATURE_CONFIG_NAME_TOKEN,
-          useValue: featureName,
-          // multi: true,
-        },
-        {
-          provide: FEATURE_PERMISSION_CONFIG,
-          useValue: [featureName, config],
+          provide: PERMISSION_CONFIG_TOKEN,
+          useValue: config,
           multi: true,
         }
       ],

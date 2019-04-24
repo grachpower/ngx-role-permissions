@@ -1,3 +1,3 @@
 export interface PermissionConfigInterface {
-  [name: string]: string[] | PermissionConfigInterface;
+  [name: string]: string[];
 }

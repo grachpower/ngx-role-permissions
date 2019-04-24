@@ -5,23 +5,17 @@ import { map } from 'rxjs/operators';
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionConfigInterface } from '../interface/permissionConfig.interface';
 import { PermissionsStoreService } from './permissions-store.service';
-import { FEATURE_PERMISSION_CONFIG } from '../tokens/feature-config.token';
 
 @Injectable()
 export class PermissionService {
   constructor(
     private permissionStore: PermissionsStoreService,
-    @Optional() @Inject(PERMISSION_CONFIG_TOKEN) private permissionConfigs: PermissionConfigInterface[],
-    @Optional() @Inject(FEATURE_PERMISSION_CONFIG) private featureConfigs: [string, PermissionConfigInterface][],
+    @Optional() @Inject(PERMISSION_CONFIG_TOKEN) permissionConfigs: PermissionConfigInterface[],
   ) {
     if (permissionConfigs) {
       this.permissionStore.updateConfig(permissionConfigs);
-    }
-
-    if (featureConfigs) {
-      featureConfigs.forEach(([featureConfigName, featureConfig]: [string, PermissionConfigInterface]) => {
-        this.permissionStore.addFeatureConfig(featureConfigName, featureConfig);
-      });
+    } else {
+      throw new Error('No permission config defined');
     }
   }
 
@@ -69,34 +63,6 @@ export class PermissionService {
         }
 
         const elementRoles = config[pageOrElement];
-
-        if (!elementRoles) {
-          return false;
-        }
-
-        return (elementRoles as Array<string>).some((role: string) => roles.includes(role));
-      }),
-    );
-  }
-
-  public canAccessFeature(featureName: string, pageOrElement: string): Observable<boolean> {
-    return combineLatest(this.permissionStore._featureConfigs, this.permissionStore._roles$).pipe(
-      map(([configs, roles]: [PermissionConfigInterface, string[]]) => {
-        if (!configs[featureName]) {
-          console.error(`No feature ${featureName} provided`);
-
-          return false;
-        }
-
-        const featureConfig = configs[featureName];
-
-        if (!featureConfig[pageOrElement]) {
-          console.error(`No element ${pageOrElement} provided`);
-
-          return false;
-        }
-
-        const elementRoles = featureConfig[pageOrElement];
 
         if (!elementRoles) {
           return false;
