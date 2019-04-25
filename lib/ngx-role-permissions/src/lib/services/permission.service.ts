@@ -3,14 +3,14 @@ import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
-import { PermissionConfigInterface } from '../interface/permissionConfig.interface';
+import { PermissionDataType } from '../interface/permissionConfig.interface';
 import { PermissionsStoreService } from './permissions-store.service';
 
 @Injectable()
 export class PermissionService {
   constructor(
     private permissionStore: PermissionsStoreService,
-    @Optional() @Inject(PERMISSION_CONFIG_TOKEN) permissionConfigs: PermissionConfigInterface[],
+    @Optional() @Inject(PERMISSION_CONFIG_TOKEN) permissionConfigs: PermissionDataType[],
   ) {
     if (permissionConfigs) {
       this.permissionStore.updateConfig(permissionConfigs);
@@ -51,24 +51,26 @@ export class PermissionService {
     return this.permissionStore._roles$;
   }
 
-  public get config(): Observable<PermissionConfigInterface> {
+  public get config(): Observable<PermissionDataType> {
     return this.permissionStore._configs$.asObservable();
   }
 
-  public canAccess(pageOrElement: string): Observable<boolean> {
+  public canAccess(element: string): Observable<boolean> {
     return combineLatest(this.config, this.permissionStore._roles$).pipe(
-      map(([config, roles]: [PermissionConfigInterface, string[]]) => {
-        if (!config[pageOrElement]) {
+      map(([config, roles]: [PermissionDataType, string[]]) => {
+        if (!this.permissionStore.hasElement(element)) {
+          console.error('Cannot find element ', element);
           return false;
         }
 
-        const elementRoles = config[pageOrElement];
+        const permElement = this.permissionStore.getElement(element);
+        const elementKeys = permElement.keys;
 
-        if (!elementRoles) {
-          return false;
+        if (permElement.unlockable) {
+          return elementKeys.some((role: string) => roles.includes(role));
+        } else {
+          return !elementKeys.some((role: string) => roles.includes(role));
         }
-
-        return (elementRoles as Array<string>).some((role: string) => roles.includes(role));
       }),
     );
   }

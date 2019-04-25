@@ -3,7 +3,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CanPermitDirective } from './directives/can-permit.directive';
 import { CanNotPermitDirective } from './directives/can-not-permit.directive';
 import { PERMISSION_CONFIG_TOKEN } from './tokens/permission-config.token';
-import { PermissionConfigInterface } from './interface/permissionConfig.interface';
+import { PermissionDataType } from './interface/permissionConfig.interface';
 import { PermissionService } from './services/permission.service';
 import { PermissionGuard } from './guards/permission.guard';
 
@@ -22,7 +22,7 @@ import { PermissionGuard } from './guards/permission.guard';
   ]
 })
 export class NgxPermissionModule {
-  public static withElements(config: PermissionConfigInterface): ModuleWithProviders {
+  public static withElements(config: PermissionDataType): ModuleWithProviders {
     return {
       ngModule: NgxPermissionModule,
       providers: [

@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-import { PermissionConfigInterface } from '../interface/permissionConfig.interface';
+import { PermissionDataType } from '../interface/permissionConfig.interface';
 
-export const PERMISSION_CONFIG_TOKEN = new InjectionToken<PermissionConfigInterface>('PERMISSION_CONFIG_TOKEN');
+export const PERMISSION_CONFIG_TOKEN = new InjectionToken<PermissionDataType>('PERMISSION_CONFIG_TOKEN');
