@@ -7,6 +7,10 @@ Permission and roles based access control for your angular(angular 6,7+) applica
 
 ## Documentation and examples
 
+v2.0.0 have critical changes
+
+see CHANGELOG.MD
+
 
 ## Demo
 [Demo ngx-role-permissions] (https://stackblitz.com/edit/ngx-role-permissions)
@@ -29,6 +33,12 @@ $ npm install ngx-role-permissions  --save
 
 and then from your Angular `AppModule`:
 
+use `NgxPermissionModule` with `withElements` in any of your modules
+
+`doorlock` generates permission element which can be defined in constants or enums etc.
+`unlockWith(...)` provide roles for which elements will be available 
+`lockWith(...)` tells if current element will be block with specified roles 
+
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -36,7 +46,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Import your library
-import { NgxPermissionModule } from 'ngx-role-permissions';
+import { NgxPermissionModule, doorlock } from 'ngx-role-permissions';
 
 @NgModule({
   declarations: [
@@ -46,10 +56,10 @@ import { NgxPermissionModule } from 'ngx-role-permissions';
     BrowserModule,
 
     // Specify your library as an import
-     NgxPermissionModule.forRoot({
-            yourElement1: ['user', 'admin'],
-            yourElement2: ['user'],
-        })
+     NgxPermissionModule.withElements([
+       doorlock('yourElement1').unlockWith(['admin', 'user']),
+       doorlock('yourElement2').lockWith(['user']),
+     ]),
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -60,7 +70,7 @@ export class AppModule { }
 SharedModule
 
 If you use a SharedModule that you import in multiple other feature modules, you can export the NgxPermissionModule to make sure you don't have to import it in every module.
-NgxPermissionModule with or without `forRoot` or `forChild` notations provides `canPermit` directive so you should import it in every module you use permission directives.  
+NgxPermissionModule with or without `withElements`notations provides `canPermit` and `canNotPermit` directive so you should import it in every module you use permission directives.  
 ```typescript
 @NgModule({
     exports: [
@@ -70,24 +80,6 @@ NgxPermissionModule with or without `forRoot` or `forChild` notations provides `
 })
 export class SharedModule { }
 ```
-> Note: Never call a forRoot static method in the SharedModule. You might end up with different instances of the service in your injector tree. But you can use forChild if necessary.
-
-##### Lazy loaded modules
-
-When you lazy load a module, you should use the `forChild` static method to import the `NgxPermissionModule`.
-
-```typescript
-@NgModule({
-    imports: [
-        NgxPermissionModule.forChild('featureModuleName', {
-            yourFeatureElement1: ['user', 'admin'],
-            yourFeatureElement2: ['user', 'admin'],
-        })
-    ]
-})
-export class LazyLoadedModule { }
-```
-
 
 Once your library is imported, you can use its components, directives and pipes in your Angular application:
 
@@ -135,14 +127,19 @@ Usage in templates
 
 `*canNotPermit` check if element roles excludes current user role
 ```html
-<div class="element-two" *canPermit="'yourFeatureElement1'">
+<div class="element-two" *canNotPermit="'yourFeatureElement1'">
     Feature element one directive example
 </div>
 ```
 ### Managing permissions
 
 
-Usage in routing guards
+Usage in routing guards:
+`permissionConfig` placed in data declare route configuration.
+`permission element` - name of element which defined in module with `doorlock`.
+`redirectRoute` - router path to redirect page if current route is blocked.
+If `redirectRoute` was not defined no redirect will be done
+
 ```typescript
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -184,44 +181,47 @@ Usage in custom directives/guards/components etc.
 @Directive({
   selector: '[canAccess]',
 })
-export class CanPermitDirective {
+export class CanPermitDirective implements OnChanges, OnDestroy {
+  private permissionSubscription: SubscriptionLike;
+
   constructor(
     private permissionService: PermissionService,
-    private _viewContainer: ViewContainerRef,
-    private _templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private templateRef: TemplateRef<any>,
   ) {}
 
-  @Input()
-  set canAccess(elementName: string) {
-    if (!!this.featureName) {
-      this.permissionService.canAccessFeature(this.featureName, elementName) //get feature permission element
-      .pipe(first())
-      .subscribe((res: boolean) => {
-        if (!!res && !!this._templateRef) {
-          this._viewContainer.clear();
-          this._viewContainer.createEmbeddedView(this._templateRef, {});
-        } else {
-          this._viewContainer.clear();
-        }
-      });
-    } else {
-      this.permissionService.canAccess(elementName) //get root permission element
-      .pipe(first())
-      .subscribe((res: boolean) => {
-        if (!!res && !!this._templateRef) {
-          this._viewContainer.clear();
-          this._viewContainer.createEmbeddedView(this._templateRef, {});
-        } else {
-          this._viewContainer.clear();
-        }
-      });
+  @Input() canAccess: string;
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    this.initPermissionCheck(changes.canPermit.currentValue);
+  }
+
+  public ngOnDestroy(): void {
+    this.permissionSubscription.unsubscribe();
+    this.permissionSubscription = null;
+  }
+
+  private initPermissionCheck(elementName: string): void {
+    if (!!this.permissionSubscription) {
+      this.permissionSubscription.unsubscribe();
+      this.permissionSubscription = null;
     }
+
+    this.permissionSubscription = this.permissionService.canAccess(elementName)
+      .subscribe((res: boolean) => {
+        if (!!res && !!this.templateRef) {
+          this.viewContainer.clear();
+          this.viewContainer.createEmbeddedView(this.templateRef, {});
+        } else {
+          this.viewContainer.clear();
+        }
+      });
   }
 }
 ```
 
 
 ## For google
-angular permissions, angular 4 permissions, angular permissions, angular 5 permissions ng2 permissions ng permissions
+angular permissions, angular 6 permissions, angular permissions, angular 6 permissions ng2 permissions ng permissions
 ng-permissions ng2-permissions angular2 permissions  angular4 permissions angular 5 permissions
 
