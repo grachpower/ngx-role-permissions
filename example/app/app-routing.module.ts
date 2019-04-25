@@ -19,6 +19,10 @@ const routes: Routes = [
     data: {
       permissionElement: 'childTwo',
     }
+  },
+  {
+    path: 'child3',
+    loadChildren: './pages/child3/child3.module#Child3Module',
   }
 ];
 
