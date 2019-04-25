@@ -11,6 +11,16 @@ export * from './lib/directives/can-permit.directive';
 export * from './lib/directives/can-not-permit.directive';
 
 /**
+ * Models
+ */
+export * from './lib/models/element';
+
+/**
+ * Helpers
+ */
+export * from './lib/helpers/element-factory';
+
+/**
  * Guards
  */
 export * from './lib/guards/permission.guard';
@@ -21,12 +31,11 @@ export * from './lib/guards/permission.guard';
 export * from './lib/services/permission.service';
 
 /**
- * Models
- */
-export * from './lib/models/role';
-
-/**
  * Tokens
  */
 export * from './lib/tokens/permission-config.token';
-export * from './lib/tokens/feature-config.token';
+
+/**
+ * Interfaces
+ */
+export * from './lib/interface/permissionConfig.interface';

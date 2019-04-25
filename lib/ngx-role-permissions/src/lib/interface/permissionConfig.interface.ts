@@ -1,3 +1,3 @@
-export interface PermissionConfigInterface {
-  [name: string]: string[] | PermissionConfigInterface;
-}
+import { PermissionElement } from '../models/element';
+
+export type PermissionDataType = Array<PermissionElement>;

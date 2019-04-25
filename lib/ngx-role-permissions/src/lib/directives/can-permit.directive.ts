@@ -3,8 +3,6 @@ import {
   Input,
   ViewContainerRef,
   TemplateRef,
-  Optional,
-  Inject,
   OnDestroy,
   SimpleChanges,
   OnChanges,
@@ -12,7 +10,6 @@ import {
 import { SubscriptionLike } from 'rxjs';
 
 import { PermissionService } from '../services/permission.service';
-import { FEATURE_CONFIG_NAME_TOKEN } from '../tokens/feature-config.token';
 
 /**
  * Structural directive
@@ -28,9 +25,8 @@ export class CanPermitDirective implements OnChanges, OnDestroy {
 
   constructor(
     private permissionService: PermissionService,
-    private _viewContainer: ViewContainerRef,
-    private _templateRef: TemplateRef<any>,
-    @Optional() @Inject(FEATURE_CONFIG_NAME_TOKEN) private featureName: string,
+    private viewContainer: ViewContainerRef,
+    private templateRef: TemplateRef<any>,
   ) {}
 
   @Input() canPermit: string;
@@ -50,26 +46,14 @@ export class CanPermitDirective implements OnChanges, OnDestroy {
       this.permissionSubscription = null;
     }
 
-    if (!!this.featureName) {
-      this.permissionSubscription = this.permissionService.canAccessFeature(this.featureName, elementName)
-        .subscribe((res: boolean) => {
-          if (!!res && !!this._templateRef) {
-            this._viewContainer.clear();
-            this._viewContainer.createEmbeddedView(this._templateRef, {});
-          } else {
-            this._viewContainer.clear();
-          }
-        });
-    } else {
-      this.permissionSubscription = this.permissionService.canAccess(elementName)
-        .subscribe((res: boolean) => {
-          if (!!res && !!this._templateRef) {
-            this._viewContainer.clear();
-            this._viewContainer.createEmbeddedView(this._templateRef, {});
-          } else {
-            this._viewContainer.clear();
-          }
-        });
-    }
+    this.permissionSubscription = this.permissionService.canAccess(elementName)
+      .subscribe((res: boolean) => {
+        if (!!res && !!this.templateRef) {
+          this.viewContainer.clear();
+          this.viewContainer.createEmbeddedView(this.templateRef, {});
+        } else {
+          this.viewContainer.clear();
+        }
+      });
   }
 }
