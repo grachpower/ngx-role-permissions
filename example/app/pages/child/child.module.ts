@@ -11,7 +11,7 @@ import { DataModule } from '../../components/data-component/data.module';
     CommonModule,
     ChildRoutingModule,
     DataModule,
-    NgxPermissionModule.forChild({
+    NgxPermissionModule.withElements({
       myChildElement: ['admin'],
       inversePermiter: ['admin'],
     })

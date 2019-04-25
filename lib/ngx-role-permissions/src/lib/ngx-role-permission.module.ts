@@ -6,7 +6,6 @@ import { PERMISSION_CONFIG_TOKEN } from './tokens/permission-config.token';
 import { PermissionConfigInterface } from './interface/permissionConfig.interface';
 import { PermissionService } from './services/permission.service';
 import { PermissionGuard } from './guards/permission.guard';
-import { PermissionsStoreService } from './services/permissions-store.service';
 
 @NgModule({
   declarations: [
@@ -23,21 +22,7 @@ import { PermissionsStoreService } from './services/permissions-store.service';
   ]
 })
 export class NgxPermissionModule {
-  public static forRoot(config: PermissionConfigInterface): ModuleWithProviders {
-    return {
-      ngModule: NgxPermissionModule,
-      providers: [
-        PermissionsStoreService,
-        {
-          provide: PERMISSION_CONFIG_TOKEN,
-          useValue: config,
-          multi: true,
-        }
-      ],
-    };
-  }
-
-  public static forChild(config: PermissionConfigInterface): ModuleWithProviders {
+  public static withElements(config: PermissionConfigInterface): ModuleWithProviders {
     return {
       ngModule: NgxPermissionModule,
       providers: [

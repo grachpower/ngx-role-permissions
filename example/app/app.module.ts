@@ -14,7 +14,7 @@ import { DataModule } from './components/data-component/data.module';
     BrowserModule,
     AppRoutingModule,
     DataModule,
-    NgxPermissionModule.forRoot({
+    NgxPermissionModule.withElements({
       childOne: ['admin', 'user'],
       childTwo: ['user'],
       pageElement: ['admin'],
