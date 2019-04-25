@@ -16,7 +16,7 @@ import { PermElementTypes } from '../../elements.enum';
       doorlock(PermElementTypes.childInnerTwo).unlockWith(['admin', 'user']),
       doorlock(PermElementTypes.elementOne).unlockWith(['admin', 'user']),
       doorlock(PermElementTypes.elementTwo).unlockWith(['admin']),
-      doorlock(PermElementTypes.pageElement).unlockWith(['admin']),
+      // doorlock(PermElementTypes.pageElement).unlockWith(['admin']),
     ]),
   ],
   declarations: [ChildViewTwoComponent, ChildViewThreeComponent]
