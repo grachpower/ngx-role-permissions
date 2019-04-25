@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DataModule } from './components/data-component/data.module';
 import { PermElementTypes } from './elements.enum';
+import { INITIAL_ROLES } from '../../lib/ngx-role-permissions/src/lib/tokens/initial-roles.token';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,13 @@ import { PermElementTypes } from './elements.enum';
       doorlock(PermElementTypes.PAGE_ELEMENT).unlockWith(['admin']),
     ]),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: INITIAL_ROLES,
+      multi: true,
+      useValue: ['user'],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,17 +5,25 @@ import { map } from 'rxjs/operators';
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionDataType } from '../interface/permissionConfig.interface';
 import { PermissionsStoreService } from './permissions-store.service';
+import { INITIAL_ROLES } from '../tokens/initial-roles.token';
 
 @Injectable()
 export class PermissionService {
   constructor(
     private permissionStore: PermissionsStoreService,
     @Optional() @Inject(PERMISSION_CONFIG_TOKEN) permissionConfigs: PermissionDataType[],
+    @Optional() @Inject(INITIAL_ROLES) initialRoles: string[],
   ) {
     if (permissionConfigs) {
       this.permissionStore.updateConfig(permissionConfigs);
     } else {
       throw new Error('No permission config defined');
+    }
+
+    console.log(initialRoles);
+
+    if (initialRoles) {
+      this.setRoles([].concat(...initialRoles));
     }
   }
 

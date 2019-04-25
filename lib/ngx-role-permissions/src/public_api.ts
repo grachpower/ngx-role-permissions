@@ -34,6 +34,7 @@ export * from './lib/services/permission.service';
  * Tokens
  */
 export * from './lib/tokens/permission-config.token';
+export * from './lib/tokens/initial-roles.token';
 
 /**
  * Interfaces
