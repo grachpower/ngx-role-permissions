@@ -16,9 +16,9 @@ import { PermElementTypes } from './elements.enum';
     AppRoutingModule,
     DataModule,
     NgxPermissionModule.withElements([
-      doorlock(PermElementTypes.CHILD_ONE).unlockWith(['admin', 'user']),
       doorlock(PermElementTypes.CHILD_TWO).unlockWith(['user']),
       doorlock(PermElementTypes.PAGE_ELEMENT).unlockWith(['admin']),
+      doorlock(PermElementTypes.CHILD_ONE).lockWith(['user', 'admin']),
     ]),
   ],
   providers: [],

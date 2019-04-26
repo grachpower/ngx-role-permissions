@@ -30,4 +30,12 @@ export class DataComponent implements OnInit, OnDestroy {
   public removeRoleTester(): void {
     this.permissionService.removeRole(this.role);
   }
+
+  public addUserRole(): void {
+    this.permissionService.addRole('user');
+  }
+
+  public removeUserRole(): void {
+    this.permissionService.removeRole('user');
+  }
 }
