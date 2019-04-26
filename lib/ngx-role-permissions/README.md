@@ -67,6 +67,27 @@ import { NgxPermissionModule, doorlock } from 'ngx-role-permissions';
 export class AppModule { }
 ```
 
+Providing initial roles:
+`INITIAL_ROLES` is multitoken that can provide initial roles
+```typescript
+@NgModule({
+  ...
+  imports: [
+    // Specify your library as an import
+     NgxPermissionModule.withElements([
+       ...
+     ]),
+  ],
+  providers: [
+      provide: INITIAL_ROLES,
+      multi: true,
+      useValue: ['user'], //your roles
+  ]
+})
+export class AppModule { }
+```
+
+
 SharedModule
 
 If you use a SharedModule that you import in multiple other feature modules, you can export the NgxPermissionModule to make sure you don't have to import it in every module.

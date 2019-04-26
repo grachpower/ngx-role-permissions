@@ -22,14 +22,12 @@ export class AppComponent implements OnInit {
       console.log('Config: ', config);
     });
 
-    // this.permissionService.setRoles([
-    //   'user',
-    // ]);
-    //
-    // // append role
-    // this.permissionService.addRole('admin');
-    //
-    // // remove role
-    // this.permissionService.removeRole('admin');
+    // this.permissionService.addRole('user');
+
+    // append role
+    this.permissionService.addRole('admin');
+
+    // remove role
+    this.permissionService.removeRole('admin');
   }
 }

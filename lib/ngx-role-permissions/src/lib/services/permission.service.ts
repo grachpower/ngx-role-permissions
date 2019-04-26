@@ -12,7 +12,7 @@ export class PermissionService {
   constructor(
     private permissionStore: PermissionsStoreService,
     @Optional() @Inject(PERMISSION_CONFIG_TOKEN) permissionConfigs: PermissionDataType[],
-    @Optional() @Inject(INITIAL_ROLES) initialRoles: string[],
+    @Optional() @Inject(INITIAL_ROLES) initialRoles: string[][],
   ) {
     if (permissionConfigs) {
       this.permissionStore.updateConfig(permissionConfigs);
@@ -20,10 +20,10 @@ export class PermissionService {
       throw new Error('No permission config defined');
     }
 
-    console.log(initialRoles);
-
     if (initialRoles) {
-      this.setRoles([].concat(...initialRoles));
+      const initialRolesFlatten = [].concat(...initialRoles);
+      const rolesSet = new Set(initialRolesFlatten);
+      this.setRoles(Array.from(rolesSet));
     }
   }
 
@@ -73,11 +73,13 @@ export class PermissionService {
 
         const permElement = this.permissionStore.getElement(element);
         const elementKeys = permElement.keys;
+        const currentRolesKeys = new Set(roles);
+        const elementHasRolesFromStore = elementKeys.some((role: string) => currentRolesKeys.has(role));
 
         if (permElement.unlockable) {
-          return elementKeys.some((role: string) => roles.includes(role));
+          return elementHasRolesFromStore;
         } else {
-          return !elementKeys.some((role: string) => roles.includes(role));
+          return !elementHasRolesFromStore;
         }
       }),
     );
