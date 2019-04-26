@@ -37,6 +37,10 @@ use `NgxPermissionModule` with `withElements` in any of your modules
 use `LockTypes.UNLOCKABLE` provide roles for which elements will be available 
 `LockTypes.UNLOCKABLE` tells if current element will be block with specified roles 
 
+As anther aproach provide `PERMISSION_CONFIG_TOKEN` token with `doorlock`
+use `lockWith` declaration to declare blocking keys
+use `unlockWith` as an opposite to `lockWith`
+
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -44,7 +48,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Import your library
-import { NgxPermissionModule, LockTypes } from 'ngx-role-permissions';
+import { NgxPermissionModule, LockTypes, PERMISSION_CONFIG_TOKEN, doorlock } from 'ngx-role-permissions';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,14 @@ import { NgxPermissionModule, LockTypes } from 'ngx-role-permissions';
        {name: 'yourElement2', lockType: LockTypes.LOCKABLE, keys: ['user']},
      ]),
   ],
-  providers: [],
+  {
+      provide: PERMISSION_CONFIG_TOKEN,
+      multi: true,
+      useValue: [
+        doorlock(PermElementTypes.PAGE_ELEMENT).lockWith(['admin']),
+        doorlock(PermElementTypes.CHILD_ONE).unlockWith(['user', 'admin']),
+      ],
+    }
   bootstrap: [AppComponent]
 })
 export class AppModule { }

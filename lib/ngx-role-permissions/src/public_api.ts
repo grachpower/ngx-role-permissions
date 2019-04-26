@@ -17,10 +17,8 @@ export * from './lib/models/element';
 
 /**
  * Helpers
- *
- * @Deprecated
  */
-// export * from './lib/helpers/element-factory';
+export * from './lib/helpers/doorlock';
 
 /**
  * Enums and types
