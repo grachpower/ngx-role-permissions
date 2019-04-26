@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxPermissionModule, doorlock } from 'ngx-role-permissions';
+import { LockTypes, NgxPermissionModule } from 'ngx-role-permissions';
 
 import { ChildTwoRoutingModule } from './child-two-routing.module';
 import { ChildViewTwoComponent } from './child-view-two/child-view-two.component';
@@ -12,10 +12,10 @@ import { PermElementTypes } from '../../elements.enum';
     CommonModule,
     ChildTwoRoutingModule,
     NgxPermissionModule.withElements([
-      doorlock(PermElementTypes.childInnerOne).unlockWith(['admin']),
-      doorlock(PermElementTypes.childInnerTwo).unlockWith(['admin', 'user']),
-      doorlock(PermElementTypes.elementOne).unlockWith(['admin', 'user']),
-      doorlock(PermElementTypes.elementTwo).unlockWith(['admin']),
+      {name: PermElementTypes.childInnerOne, lockType: LockTypes.UNLOCKABLE, keys: ['admin']},
+      {name: PermElementTypes.childInnerTwo, lockType: LockTypes.UNLOCKABLE, keys: ['admin', 'user']},
+      {name: PermElementTypes.elementOne, lockType: LockTypes.UNLOCKABLE, keys: ['admin', 'user']},
+      {name: PermElementTypes.elementTwo, lockType: LockTypes.UNLOCKABLE, keys: ['admin']},
       // doorlock(PermElementTypes.pageElement).unlockWith(['admin']),
     ]),
   ],

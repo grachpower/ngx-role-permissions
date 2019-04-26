@@ -1,3 +1,3 @@
-import { PermissionElement } from '../models/element';
+import { PermissionElementDTO } from '../models/element';
 
-export type PermissionDataType = PermissionElement[];
+export type PermissionDataType = PermissionElementDTO[];

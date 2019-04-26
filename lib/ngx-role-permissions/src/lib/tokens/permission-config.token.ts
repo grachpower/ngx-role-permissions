@@ -1,4 +1,4 @@
 import { InjectionToken } from '@angular/core';
-import { PermissionElement } from '../models/element';
+import { PermissionElementDTO } from '../models/element';
 
-export const PERMISSION_CONFIG_TOKEN = new InjectionToken<PermissionElement[]>('PERMISSION_CONFIG_TOKEN');
+export const PERMISSION_CONFIG_TOKEN = new InjectionToken<PermissionElementDTO[]>('PERMISSION_CONFIG_TOKEN');

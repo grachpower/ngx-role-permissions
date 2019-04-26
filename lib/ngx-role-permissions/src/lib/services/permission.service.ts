@@ -1,11 +1,12 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionDataType } from '../interface/permissionConfig.interface';
 import { PermissionsStoreService } from './permissions-store.service';
 import { INITIAL_ROLES } from '../tokens/initial-roles.token';
+import { LockTypes } from '../enums/locktypes.enum';
 
 @Injectable()
 export class PermissionService {
@@ -64,8 +65,8 @@ export class PermissionService {
   }
 
   public canAccess(element: string): Observable<boolean> {
-    return combineLatest(this.config, this.permissionStore._roles$).pipe(
-      map(([config, roles]: [PermissionDataType, string[]]) => {
+    return this.permissionStore._roles$.pipe(
+      map((roles: string[]) => {
         if (!this.permissionStore.hasElement(element)) {
           console.error('Cannot find element ', element);
           return false;
@@ -76,10 +77,13 @@ export class PermissionService {
         const currentRolesKeys = new Set(roles);
         const elementHasRolesFromStore = elementKeys.some((role: string) => currentRolesKeys.has(role));
 
-        if (permElement.unlockable) {
-          return elementHasRolesFromStore;
-        } else {
-          return !elementHasRolesFromStore;
+        switch (permElement.lockType) {
+          case LockTypes.UNLOCKABLE:
+            return elementHasRolesFromStore;
+          case LockTypes.LOCKABLE:
+            return !elementHasRolesFromStore;
+          default:
+            return elementHasRolesFromStore;
         }
       }),
     );

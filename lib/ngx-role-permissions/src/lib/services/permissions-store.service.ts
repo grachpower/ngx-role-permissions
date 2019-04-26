@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { PermissionDataType } from '../interface/permissionConfig.interface';
-import { PermissionElement } from '../models/element';
+import { PermissionElementDTO } from '../models/element';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class PermissionsStoreService {
 
   public updateConfig(permissionConfigs: PermissionDataType[]): void {
     this._configs$.next(this.concatAllConfigs([this._configs$.value, ...permissionConfigs]));
-    const configNameList = this._configs$.value.map(({name}: PermissionElement) => name);
+    const configNameList = this._configs$.value.map(({name}: PermissionElementDTO) => name);
     this.configNamesSet = new Set(configNameList);
   }
 
@@ -23,8 +23,8 @@ export class PermissionsStoreService {
     return this.configNamesSet.has(name);
   }
 
-  public getElement(name: string): PermissionElement {
-    return this._configs$.value.find((element: PermissionElement) => element.name === name);
+  public getElement(name: string): PermissionElementDTO {
+    return this._configs$.value.find((element: PermissionElementDTO) => element.name === name);
   }
 
   private concatAllConfigs(configs: PermissionDataType[]): PermissionDataType {
@@ -34,8 +34,8 @@ export class PermissionsStoreService {
   }
 
   private concatTwoConfigs(originalConfig: PermissionDataType, newConfig: PermissionDataType): PermissionDataType {
-    const prevConfKeys = originalConfig.map((element: PermissionElement) => element.name);
-    const newConfigKeys = newConfig.map((element: PermissionElement) => element.name);
+    const prevConfKeys = originalConfig.map((element: PermissionElementDTO) => element.name);
+    const newConfigKeys = newConfig.map((element: PermissionElementDTO) => element.name);
     const prevConfSet = new Set(prevConfKeys);
 
     newConfigKeys.forEach((key: string) => {

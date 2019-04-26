@@ -1,12 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgxPermissionModule, doorlock, PermissionGuard, INITIAL_ROLES } from 'ngx-role-permissions';
+import { NgxPermissionModule, INITIAL_ROLES, LockTypes } from 'ngx-role-permissions';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DataModule } from './components/data-component/data.module';
 import { PermElementTypes } from './elements.enum';
-import { RouterModule, Routes } from '@angular/router';
 
 // const routes: Routes = [
 //   {
@@ -37,6 +36,20 @@ import { RouterModule, Routes } from '@angular/router';
 //   }
 // ];
 
+// const elements = [
+//   doorlock(PermElementTypes.CHILD_TWO).unlockWith(['user']),
+//   doorlock(PermElementTypes.PAGE_ELEMENT).unlockWith(['admin']),
+//   doorlock(PermElementTypes.CHILD_ONE).lockWith(['user', 'admin']),
+// ];
+
+// const elements = [
+//   {name: PermElementTypes.CHILD_TWO, unlockable: true, keys: ['user']},
+//   {name: PermElementTypes.PAGE_ELEMENT, unlockable: true, keys: ['admin']},
+//   {name: PermElementTypes.CHILD_ONE, unlockable: false, keys: ['user', 'admin']},
+// ];
+
+// console.log(elements);
+
 @NgModule({
   declarations: [
     AppComponent
@@ -46,9 +59,9 @@ import { RouterModule, Routes } from '@angular/router';
     AppRoutingModule,
     DataModule,
     NgxPermissionModule.withElements([
-      doorlock(PermElementTypes.CHILD_TWO).unlockWith(['user']),
-      doorlock(PermElementTypes.PAGE_ELEMENT).unlockWith(['admin']),
-      doorlock(PermElementTypes.CHILD_ONE).lockWith(['user', 'admin']),
+      {name: PermElementTypes.CHILD_TWO, lockType: LockTypes.UNLOCKABLE, keys: ['user']},
+      {name: PermElementTypes.PAGE_ELEMENT, lockType: LockTypes.LOCKABLE, keys: ['admin']},
+      {name: PermElementTypes.CHILD_ONE, lockType: LockTypes.UNLOCKABLE, keys: ['user', 'admin']},
     ]),
     // RouterModule.forRoot(routes),
   ],

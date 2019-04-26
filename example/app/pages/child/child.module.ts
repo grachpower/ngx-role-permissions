@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { doorlock, NgxPermissionModule } from 'ngx-role-permissions';
+import { LockTypes, NgxPermissionModule } from 'ngx-role-permissions';
 
 import { ChildRoutingModule } from './child-routing.module';
 import { ChildViewComponent } from './child-view/child-view.component';
@@ -13,8 +13,8 @@ import { PermElementTypes } from '../../elements.enum';
     ChildRoutingModule,
     DataModule,
     NgxPermissionModule.withElements([
-      doorlock(PermElementTypes.MY_CHILD_ELEMENT).unlockWith(['admin']),
-      doorlock(PermElementTypes.INVERSE_PERMITTER).lockWith(['admin']),
+      {name: PermElementTypes.MY_CHILD_ELEMENT, lockType: LockTypes.UNLOCKABLE, keys: ['admin']},
+      {name: PermElementTypes.INVERSE_PERMITTER, lockType: LockTypes.LOCKABLE, keys: ['admin']},
     ])
   ],
   declarations: [ChildViewComponent],

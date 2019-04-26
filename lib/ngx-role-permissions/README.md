@@ -34,10 +34,8 @@ $ npm install ngx-role-permissions  --save
 and then from your Angular `AppModule`:
 
 use `NgxPermissionModule` with `withElements` in any of your modules
-
-`doorlock` generates permission element which can be defined in constants or enums etc.
-`unlockWith(...)` provide roles for which elements will be available 
-`lockWith(...)` tells if current element will be block with specified roles 
+use `LockTypes.UNLOCKABLE` provide roles for which elements will be available 
+`LockTypes.UNLOCKABLE` tells if current element will be block with specified roles 
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -46,7 +44,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Import your library
-import { NgxPermissionModule, doorlock } from 'ngx-role-permissions';
+import { NgxPermissionModule, LockTypes } from 'ngx-role-permissions';
 
 @NgModule({
   declarations: [
@@ -57,8 +55,8 @@ import { NgxPermissionModule, doorlock } from 'ngx-role-permissions';
 
     // Specify your library as an import
      NgxPermissionModule.withElements([
-       doorlock('yourElement1').unlockWith(['admin', 'user']),
-       doorlock('yourElement2').lockWith(['user']),
+       {name: 'yourElement1', lockType: LockTypes.UNLOCKABLE, keys: ['user', 'admin']},
+       {name: 'yourElement2', lockType: LockTypes.LOCKABLE, keys: ['user']},
      ]),
   ],
   providers: [],
@@ -157,7 +155,7 @@ Usage in templates
 
 Usage in routing guards:
 `permissionConfig` placed in data declare route configuration.
-`permission element` - name of element which defined in module with `doorlock`.
+`permission element` - name of element which defined in module.
 `redirectRoute` - router path to redirect page if current route is blocked.
 If `redirectRoute` was not defined no redirect will be done
 

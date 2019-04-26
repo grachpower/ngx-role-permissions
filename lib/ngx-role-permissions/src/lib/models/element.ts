@@ -1,32 +1,7 @@
+import { LockTypes } from '../enums/locktypes.enum';
+
 export interface PermissionElementDTO {
   name: string;
   keys: string[];
-  unlockable: boolean;
-
-  unlockWith(): PermissionElement;
-  lockWith(): PermissionElement;
-}
-
-export class PermissionElement {
-  public name: string;
-  public keys: string[] = [];
-  public unlockable = true;
-
-  constructor(name: string) {
-    this.name = name;
-  }
-
-  public unlockWith(keys: string[]): PermissionElement {
-    this.unlockable = true;
-    this.keys = keys;
-
-    return this;
-  }
-
-  public lockWith(keys: string[]): PermissionElement {
-    this.unlockable = false;
-    this.keys = keys;
-
-    return this;
-  }
+  lockType: LockTypes;
 }
