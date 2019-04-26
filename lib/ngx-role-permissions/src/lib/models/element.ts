@@ -2,6 +2,9 @@ export interface PermissionElementDTO {
   name: string;
   keys: string[];
   unlockable: boolean;
+
+  unlockWith(): PermissionElement;
+  lockWith(): PermissionElement;
 }
 
 export class PermissionElement {

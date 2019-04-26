@@ -9,7 +9,10 @@ const routes: Routes = [
     loadChildren: './pages/child/child.module#ChildModule',
     canLoad: [PermissionGuard],
     data: {
-      permissionElement: 'childOne',
+      permissionConfig: {
+        permissionElement: 'childOne',
+        redirectRoute: '/dashboard',
+      }
     }
   },
   {
@@ -17,8 +20,15 @@ const routes: Routes = [
     loadChildren: './pages/child-two/child-two.module#ChildTwoModule',
     canLoad: [PermissionGuard],
     data: {
-      permissionElement: 'childTwo',
+      permissionConfig: {
+        permissionElement: 'childTwo',
+        redirectRoute: '/dashboard',
+      }
     }
+  },
+  {
+    path: 'child3',
+    loadChildren: './pages/child3/child3.module#Child3Module',
   }
 ];
 

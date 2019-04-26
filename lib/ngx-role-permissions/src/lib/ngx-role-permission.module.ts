@@ -14,7 +14,6 @@ import { PermissionGuard } from './guards/permission.guard';
   ],
   providers: [
     PermissionGuard,
-    PermissionService,
   ],
   exports: [
     CanPermitDirective,
@@ -26,6 +25,7 @@ export class NgxPermissionModule {
     return {
       ngModule: NgxPermissionModule,
       providers: [
+        PermissionService,
         {
           provide: PERMISSION_CONFIG_TOKEN,
           useValue: config,
