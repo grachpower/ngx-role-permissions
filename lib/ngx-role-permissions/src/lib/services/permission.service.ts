@@ -5,17 +5,25 @@ import { map } from 'rxjs/operators';
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionDataType } from '../interface/permissionConfig.interface';
 import { PermissionsStoreService } from './permissions-store.service';
+import { INITIAL_ROLES } from '../tokens/initial-roles.token';
 
 @Injectable()
 export class PermissionService {
   constructor(
     private permissionStore: PermissionsStoreService,
     @Optional() @Inject(PERMISSION_CONFIG_TOKEN) permissionConfigs: PermissionDataType[],
+    @Optional() @Inject(INITIAL_ROLES) initialRoles: string[][],
   ) {
     if (permissionConfigs) {
       this.permissionStore.updateConfig(permissionConfigs);
     } else {
       throw new Error('No permission config defined');
+    }
+
+    if (initialRoles) {
+      const initialRolesFlatten = [].concat(...initialRoles);
+      const rolesSet = new Set(initialRolesFlatten);
+      this.setRoles(Array.from(rolesSet));
     }
   }
 
@@ -65,11 +73,13 @@ export class PermissionService {
 
         const permElement = this.permissionStore.getElement(element);
         const elementKeys = permElement.keys;
+        const currentRolesKeys = new Set(roles);
+        const elementHasRolesFromStore = elementKeys.some((role: string) => currentRolesKeys.has(role));
 
         if (permElement.unlockable) {
-          return elementKeys.some((role: string) => roles.includes(role));
+          return elementHasRolesFromStore;
         } else {
-          return !elementKeys.some((role: string) => roles.includes(role));
+          return !elementHasRolesFromStore;
         }
       }),
     );

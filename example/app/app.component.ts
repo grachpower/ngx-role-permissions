@@ -22,9 +22,7 @@ export class AppComponent implements OnInit {
       console.log('Config: ', config);
     });
 
-    this.permissionService.setRoles([
-      'user',
-    ]);
+    // this.permissionService.addRole('user');
 
     // append role
     this.permissionService.addRole('admin');

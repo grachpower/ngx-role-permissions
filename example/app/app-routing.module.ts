@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PermissionGuard } from 'ngx-role-permissions';
+import { PermissionGuard, INITIAL_ROLES } from 'ngx-role-permissions';
 
 
 const routes: Routes = [
@@ -34,6 +34,13 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  // providers: [
+  //   {
+  //     provide: INITIAL_ROLES,
+  //     multi: true,
+  //     useValue: ['user'],
+  //   }
+  // ],
 })
 export class AppRoutingModule { }
