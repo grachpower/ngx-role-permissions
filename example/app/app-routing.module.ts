@@ -6,7 +6,7 @@ import { PermissionGuard, INITIAL_ROLES } from 'ngx-role-permissions';
 const routes: Routes = [
   {
     path: 'child1',
-    loadChildren: './pages/child/child.module#ChildModule',
+    loadChildren: () => import('./pages/child/child.module').then(m => m.ChildModule),
     canLoad: [PermissionGuard],
     data: {
       permissionConfig: {
@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'child2',
-    loadChildren: './pages/child-two/child-two.module#ChildTwoModule',
+    loadChildren: () => import('./pages/child-two/child-two.module').then(m => m.ChildTwoModule),
     canLoad: [PermissionGuard],
     data: {
       permissionConfig: {
@@ -28,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'child3',
-    loadChildren: './pages/child3/child3.module#Child3Module',
+    loadChildren: () => import('./pages/child3/child3.module').then(m => m.Child3Module),
   }
 ];
 
