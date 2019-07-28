@@ -1,3 +1,14 @@
+## 2.4.1 (2019-07-28)
+
+
+
+### Features
+
+* deprecate element generator ([491730e](https://github.com/grachpower/ngx-role-permissions/commit/491730e))
+* initial token provides implementation ([3bbb73b](https://github.com/grachpower/ngx-role-permissions/commit/3bbb73b))
+
+
+
 # 2.0.0 (2019-04-25)
 ### Deprecated
 * `forRoot`
