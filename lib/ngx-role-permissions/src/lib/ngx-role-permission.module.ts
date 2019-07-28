@@ -20,10 +20,29 @@ import { PermissionGuard } from './guards/permission.guard';
     CanNotPermitDirective,
   ]
 })
+export class NgxPermissionWithElementsModule {
+  constructor(
+    private permissionService: PermissionService,
+  ) {}
+}
+
+@NgModule({
+  declarations: [
+    CanPermitDirective,
+    CanNotPermitDirective,
+  ],
+  providers: [
+    PermissionGuard,
+  ],
+  exports: [
+    CanPermitDirective,
+    CanNotPermitDirective,
+  ]
+})
 export class NgxPermissionModule {
   public static withElements(config: PermissionDataType): ModuleWithProviders {
     return {
-      ngModule: NgxPermissionModule,
+      ngModule: NgxPermissionWithElementsModule,
       providers: [
         PermissionService,
         {
