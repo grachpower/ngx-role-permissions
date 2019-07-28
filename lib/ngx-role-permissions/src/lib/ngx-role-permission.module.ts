@@ -1,29 +1,43 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { CanPermitDirective } from './directives/can-permit.directive';
-import { CanNotPermitDirective } from './directives/can-not-permit.directive';
 import { PERMISSION_CONFIG_TOKEN } from './tokens/permission-config.token';
 import { PermissionDataType } from './interface/permissionConfig.interface';
 import { PermissionService } from './services/permission.service';
 import { PermissionGuard } from './guards/permission.guard';
+import { NgxPermissionDirectivedModule } from './permissions-directives.module';
 
 @NgModule({
-  declarations: [
-    CanPermitDirective,
-    CanNotPermitDirective,
+  imports: [
+    NgxPermissionDirectivedModule,
   ],
   providers: [
     PermissionGuard,
   ],
   exports: [
-    CanPermitDirective,
-    CanNotPermitDirective,
-  ]
+    NgxPermissionDirectivedModule,
+  ],
+})
+export class NgxPermissionWithElementsModule {
+  constructor(
+    private permissionService: PermissionService,
+  ) {}
+}
+
+@NgModule({
+  imports: [
+    NgxPermissionDirectivedModule,
+  ],
+  providers: [
+    PermissionGuard,
+  ],
+  exports: [
+    NgxPermissionDirectivedModule,
+  ],
 })
 export class NgxPermissionModule {
   public static withElements(config: PermissionDataType): ModuleWithProviders {
     return {
-      ngModule: NgxPermissionModule,
+      ngModule: NgxPermissionWithElementsModule,
       providers: [
         PermissionService,
         {
