@@ -13,5 +13,4 @@ import { CanPermitDirective } from './directives/can-permit.directive';
         CanNotPermitDirective,
     ]
 })
-export class NgxPermissionDirectivedModule {
-}
+export class NgxPermissionDirectivedModule {}
