@@ -255,3 +255,5 @@ export class CanPermitDirective implements OnChanges, OnDestroy {
 angular permissions, angular 6 permissions, angular permissions, angular 6 permissions ng2 permissions ng permissions
 ng-permissions ng2-permissions angular2 permissions  angular4 permissions angular 5 permissions
 
+2019
+
