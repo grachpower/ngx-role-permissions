@@ -10,7 +10,9 @@
     "e2e": "ng e2e",
     "build:lib": "ng build ngx-role-permissions --prod",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "doc": "compodoc -p lib/ngx-role-permissions/tsconfig.lib.json -s"
+    "doc": "compodoc -p lib/ngx-role-permissions/tsconfig.lib.json -s",
+    "commit": "git-cz",
+    "release": "standard-version --no-verify"
   },
   "author": "Artem Andreev",
   "homepage": "https://github.com/grachpower/ngx-role-permissions#readme",
@@ -66,9 +68,11 @@
     "@angular/platform-browser": "^9.0.1",
     "@angular/platform-browser-dynamic": "^9.0.1",
     "@angular/router": "^9.0.1",
+    "commitizen": "^4.0.3",
     "core-js": "^2.5.4",
     "husky": "^4.2.3",
     "rxjs": "~6.5.4",
+    "standard-version": "^7.1.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
