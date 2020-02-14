@@ -9,6 +9,7 @@ export * from './lib/ngx-role-permission.module';
  */
 export * from './lib/directives/can-permit.directive';
 export * from './lib/directives/can-not-permit.directive';
+export * from './lib/permissions-directives.module';
 
 /**
  * Models

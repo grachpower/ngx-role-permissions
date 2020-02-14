@@ -35,7 +35,7 @@ export class NgxPermissionWithElementsModule {
   ],
 })
 export class NgxPermissionModule {
-  public static withElements(config: PermissionDataType): ModuleWithProviders {
+  public static withElements(config: PermissionDataType): ModuleWithProviders<NgxPermissionWithElementsModule> {
     return {
       ngModule: NgxPermissionWithElementsModule,
       providers: [
