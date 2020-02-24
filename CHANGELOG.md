@@ -1,3 +1,12 @@
+# 2.5.0 (2020-02-24)
+
+
+### Features
+
+* disable roles changes after destroy ([c71e428](https://github.com/grachpower/ngx-role-permissions/commit/c71e428))
+
+
+
 ## 2.4.2 (2020-02-14)
 
 
