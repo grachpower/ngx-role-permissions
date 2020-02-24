@@ -1,6 +1,6 @@
-import { Inject, Injectable, Optional } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Inject, Injectable, OnDestroy, Optional} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {distinctUntilChanged, map, takeUntil} from 'rxjs/operators';
 
 import { PERMISSION_CONFIG_TOKEN } from '../tokens/permission-config.token';
 import { PermissionDataType } from '../interface/permissionConfig.interface';
@@ -9,7 +9,10 @@ import { INITIAL_ROLES } from '../tokens/initial-roles.token';
 import { LockTypes } from '../enums/locktypes.enum';
 
 @Injectable()
-export class PermissionService {
+export class PermissionService implements OnDestroy {
+  private destroyed$ = new Subject<void>();
+  private isDestroyed = false;
+
   constructor(
     private permissionStore: PermissionsStoreService,
     @Optional() @Inject(PERMISSION_CONFIG_TOKEN) permissionConfigs: PermissionDataType[],
@@ -28,11 +31,25 @@ export class PermissionService {
     }
   }
 
+  public ngOnDestroy(): void {
+    this.isDestroyed = true;
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
+
   public clearRoles(): void {
+    if (this.isDestroyed) {
+      return;
+    }
+
     this.permissionStore._roles$.next(null);
   }
 
   public setRoles(roles: string[]): void {
+    if (this.isDestroyed) {
+      return;
+    }
+
     this.permissionStore._roles$.next(roles);
   }
 
@@ -40,6 +57,10 @@ export class PermissionService {
     const roles: string[] = this.permissionStore._roles$.value;
 
     if (roles.includes(role)) {
+      return;
+    }
+
+    if (this.isDestroyed) {
       return;
     }
 
@@ -53,15 +74,24 @@ export class PermissionService {
       return;
     }
 
+    if (this.isDestroyed) {
+      return;
+    }
+
     this.permissionStore._roles$.next(roles.filter((availableRole: string) => role !== availableRole));
   }
 
   public getRoles(): Observable<string[]> {
-    return this.permissionStore._roles$;
+    return this.permissionStore._roles$.asObservable()
+      .pipe(
+        takeUntil(this.destroyed$),
+      );
   }
 
   public get config(): Observable<PermissionDataType> {
-    return this.permissionStore._configs$.asObservable();
+    return this.permissionStore._configs$.asObservable().pipe(
+      takeUntil(this.destroyed$),
+    );
   }
 
   public canAccess(element: string): Observable<boolean> {
@@ -86,6 +116,8 @@ export class PermissionService {
             return elementHasRolesFromStore;
         }
       }),
+      distinctUntilChanged(),
+      takeUntil(this.destroyed$),
     );
   }
 }
