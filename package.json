@@ -72,7 +72,7 @@
     "core-js": "^2.5.4",
     "husky": "^4.2.3",
     "rxjs": "~6.5.4",
-    "standard-version": "^7.1.0",
+    "standard-version": "^8.0.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
